@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-28T15:45:23.028Z",
+  "generatedAt": "2026-09-28T18:56:18.378Z",
   "plugins": [
     {
       "type": "home",
@@ -12,8 +12,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 26986,
-      "md5": "304a04942f77f3c887989ad9c38150c5",
+      "bytes": 26987,
+      "md5": "ad3aa27368b9945190b6c9428630bc02",
       "path": "packages/home/example/example-1.0.0.tar.gz"
     },
     {
@@ -26,8 +26,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 22708,
-      "md5": "424fa2240eff88fb1c37db977be46a1a",
+      "bytes": 22717,
+      "md5": "ee10cf685d4a6be94caacba8e0c4c1b9",
       "path": "packages/home/missav/missav-1.0.0.tar.gz"
     },
     {
@@ -40,8 +40,8 @@
       "domain": "missav",
       "hasWebui": true,
       "depends": [],
-      "bytes": 25506,
-      "md5": "ac483e694dc3079a983dc75c5f1db7de",
+      "bytes": 25512,
+      "md5": "138070ebf80d6a160d2701f00a9040b1",
       "path": "packages/metadata/missav/missav-1.0.0.tar.gz"
     },
     {
@@ -54,8 +54,8 @@
       "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 25372,
-      "md5": "b48e5784fe99267d9f82c7d9661a2292",
+      "bytes": 25382,
+      "md5": "fef015c0a6fedcebac9c4308ab844c92",
       "path": "packages/metadata/tmdb/tmdb-1.0.0.tar.gz"
     },
     {
@@ -68,8 +68,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 48800,
-      "md5": "cd72c4b75b117dbce0e8c597403ebf84",
+      "bytes": 48850,
+      "md5": "9303d1acb10c3d8a59ed9d6180718f31",
       "path": "packages/source/catpaw/catpaw-1.0.0.tar.gz"
     },
     {
@@ -82,8 +82,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24492,
-      "md5": "0376d20548ce67266e4ab3ebc64c0d9e",
+      "bytes": 24508,
+      "md5": "27c95180bff25715eec3b80c31577981",
       "path": "packages/source/missav/missav-1.0.0.tar.gz"
     },
     {
@@ -91,14 +91,14 @@
       "id": "pikpak",
       "name": "PikPak 磁力片源",
       "author": "media-bridge",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "磁力搜索（Sukebei）→ PikPak 离线下载 → 取回可直连的播放地址；账号、令牌与保存目录都由插件自己保管",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 44105,
-      "md5": "c98d7fb6202dbf0a06f3d7a143c74e37",
-      "path": "packages/source/pikpak/pikpak-1.0.0.tar.gz"
+      "bytes": 45416,
+      "md5": "1d8b9f4532c46644a35f9f3b46a0582e",
+      "path": "packages/source/pikpak/pikpak-1.0.1.tar.gz"
     }
   ]
 }

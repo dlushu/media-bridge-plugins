@@ -20,17 +20,18 @@ packages/<类型>/<id>/<id>-<版本>.tar.gz  插件包
   "generatedAt": "…",
   "plugins": [
     {
-      "type": "source",
-      "id": "echo",
-      "name": "自检 · 回声",
+      "type": "metadata",
+      "id": "tmdb",
+      "name": "TMDB",
+      "author": "media-bridge",
       "version": "1.0.0",
-      "description": "…",
-      "domain": "",
+      "description": "元数据域 tmdb：按条目坐标取元数据与一季分集、按名字搜索；token 与缓存都归它自己",
+      "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 3125,
-      "md5": "62005f9a50d4b6df67a7517758aa7c3f",
-      "path": "packages/source/echo/echo-1.0.0.tar.gz"
+      "bytes": 25372,
+      "md5": "b48e5784fe99267d9f82c7d9661a2292",
+      "path": "packages/metadata/tmdb/tmdb-1.0.0.tar.gz"
     }
   ]
 }
@@ -49,7 +50,8 @@ node tools/plugin-pack.js --out <本仓库的工作目录>
 ```
 
 脚本会把面板仓库 `plugins/<类型>/<id>/` 下的源码打成 `tar.gz`、给包里的 `plugin.json`
-注入 `files`、再写出 `index.json`。**插件源码在面板仓库**，本仓库只收产物。
+注入 `files`、再写出 `index.json`。插件源码**留本地、不进面板版本库**（`.gitignore` 里有 `plugins/`），
+本仓库只收产物。
 
 ## 面板怎么用它
 

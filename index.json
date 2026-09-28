@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "generatedAt": "2026-09-28T10:33:31.539Z",
+  "plugins": [
+    {
+      "type": "home",
+      "id": "example",
+      "name": "首页示例（TMDB）",
+      "version": "1.0.0",
+      "description": "首页示例插件：11 行 TMDB 榜单 / 趋势 / 分类 / 平台 / 公司 / 地区 / 随机推荐。token 与行参数都归它自己",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 26966,
+      "md5": "cfbc1eb5505071b9f1aee115d65cf8cf",
+      "path": "packages/home/example/example-1.0.0.tar.gz"
+    },
+    {
+      "type": "home",
+      "id": "missav",
+      "name": "MissAV 首页",
+      "version": "1.0.0",
+      "description": "MissAV 首页插件：今日 / 本周 / 本月热门、新作、中文字幕与各分类浏览做成客户端媒体库行；站点基地址、封面基地址与逐行入口路径都由插件自己存",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 22710,
+      "md5": "6be4a06fea4a03a45cf1750a353030dd",
+      "path": "packages/home/missav/missav-1.0.0.tar.gz"
+    },
+    {
+      "type": "metadata",
+      "id": "missav",
+      "name": "MissAV 元数据",
+      "version": "1.0.0",
+      "description": "元数据域 missav：按条目编号（slug）取影片页元数据、按名字搜索；站点与封面基地址、缓存都归它自己",
+      "domain": "missav",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 25491,
+      "md5": "486a41a18e02be5a634b3045dc6fa54a",
+      "path": "packages/metadata/missav/missav-1.0.0.tar.gz"
+    },
+    {
+      "type": "metadata",
+      "id": "tmdb",
+      "name": "TMDB",
+      "version": "1.0.0",
+      "description": "元数据域 tmdb：按条目坐标取元数据与一季分集、按名字搜索；token 与缓存都归它自己",
+      "domain": "tmdb",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 25371,
+      "md5": "3a51c1d00645533367a3562f568ec91e",
+      "path": "packages/metadata/tmdb/tmdb-1.0.0.tar.gz"
+    },
+    {
+      "type": "source",
+      "id": "catpaw",
+      "name": "猫爪源",
+      "version": "1.0.0",
+      "description": "猫爪源协议：自己托管源实例（下载包 / 起进程 / 端口 / 自动更新），对外给站点清单、候选、取播放项、解析地址与站点测速",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 48975,
+      "md5": "f5259266286f1affc907f44b5e6e4a92",
+      "path": "packages/source/catpaw/catpaw-1.0.0.tar.gz"
+    },
+    {
+      "type": "source",
+      "id": "echo",
+      "name": "自检 · 回声",
+      "version": "1.0.0",
+      "description": "宿主自检用的最小插件：不申报任何站点、不打上游。用来验证装/卸、启停、管道调用、日志转发与 webui 转发。",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 3125,
+      "md5": "62005f9a50d4b6df67a7517758aa7c3f",
+      "path": "packages/source/echo/echo-1.0.0.tar.gz"
+    },
+    {
+      "type": "source",
+      "id": "missav",
+      "name": "MissAV 片源",
+      "version": "1.0.0",
+      "description": "把 MissAV 站作为一个可聚合的站点接进来：站内搜索取候选，影片页提 m3u8，播放地址带 Referer 等请求头",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 24274,
+      "md5": "b49b58198e4b58038e410f0693119d56",
+      "path": "packages/source/missav/missav-1.0.0.tar.gz"
+    },
+    {
+      "type": "source",
+      "id": "pikpak",
+      "name": "PikPak 磁力片源",
+      "version": "1.0.0",
+      "description": "磁力搜索（Sukebei）→ PikPak 离线下载 → 取回可直连的播放地址；账号、令牌与保存目录都由插件自己保管",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 43943,
+      "md5": "2c0394dbee9d0b5ba4cabf30c695488b",
+      "path": "packages/source/pikpak/pikpak-1.0.0.tar.gz"
+    }
+  ]
+}

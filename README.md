@@ -1,0 +1,64 @@
+# media-bridge-plugins
+
+[媒体桥面板](https://github.com/dlushu/media-bridge-panel)的**插件包仓库**。
+
+面板本身**不带插件**（见面板仓库的 `docs/adr/0035-plugin-library.md`）：装完之后到面板的
+「插件 → 插件库」页，从这里挑插件安装。也可以在「插件 → 管理」页上传本地的 `.tar.gz` 手装。
+
+## 这里有什么
+
+```
+index.json                              插件清单（面板的「插件库」页拉的就是它）
+packages/<类型>/<id>/<id>-<版本>.tar.gz  插件包
+```
+
+`index.json` 的形状（`schema: 1`）：
+
+```json
+{
+  "schema": 1,
+  "generatedAt": "…",
+  "plugins": [
+    {
+      "type": "source",
+      "id": "echo",
+      "name": "自检 · 回声",
+      "version": "1.0.0",
+      "description": "…",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 3125,
+      "md5": "62005f9a50d4b6df67a7517758aa7c3f",
+      "path": "packages/source/echo/echo-1.0.0.tar.gz"
+    }
+  ]
+}
+```
+
+`md5` 是**包文件本身**的 md5（面板装包时的第一道校验）；包里的 `plugin.json` 还带一份
+`files`（逐文件 md5，第二道校验），由打包脚本注入。
+
+## 这些产物怎么来的
+
+**不手工维护**。由面板仓库的打包脚本产出，输出目录就是本仓库的工作副本：
+
+```bash
+# 在面板仓库里执行
+node tools/plugin-pack.js --out <本仓库的工作目录>
+```
+
+脚本会把面板仓库 `plugins/<类型>/<id>/` 下的源码打成 `tar.gz`、给包里的 `plugin.json`
+注入 `files`、再写出 `index.json`。**插件源码在面板仓库**，本仓库只收产物。
+
+## 面板怎么用它
+
+面板默认从本仓库取清单与包，三个环境变量可以改：
+
+| 变量 | 默认 |
+|---|---|
+| `PLUGIN_REPO` | `dlushu/media-bridge-plugins` |
+| `PLUGIN_INDEX_URL` | 本仓库 `main` 分支根目录的 `index.json` |
+| `PLUGIN_SOURCE_URL` | 本仓库 `main` 分支下的包地址（占位符 `{repo}` `{path}` `{type}` `{id}` `{version}`） |
+
+自建镜像或放到内网时，把这三个变量指过去即可。

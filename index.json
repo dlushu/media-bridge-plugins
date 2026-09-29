@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-29T17:28:49.044Z",
+  "generatedAt": "2026-09-29T19:22:56.554Z",
   "plugins": [
     {
       "type": "home",
@@ -63,14 +63,14 @@
       "id": "catpaw",
       "name": "猫爪源",
       "author": "media-bridge",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "猫爪源协议：自己托管源实例（下载包 / 起进程 / 端口 / 自动更新），对外给站点清单、候选、取播放项、解析地址与站点测速",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 49241,
-      "md5": "f892e31ae2192aeef89677338b073de4",
-      "path": "packages/source/catpaw/catpaw-1.0.1.tar.gz"
+      "bytes": 51743,
+      "md5": "7d212e15325667e00c088ccc196c3b7d",
+      "path": "packages/source/catpaw/catpaw-1.0.2.tar.gz"
     },
     {
       "type": "source",

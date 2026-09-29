@@ -1,104 +1,104 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-28T18:56:18.378Z",
+  "generatedAt": "2026-09-29T17:28:49.044Z",
   "plugins": [
     {
       "type": "home",
       "id": "example",
       "name": "首页示例（TMDB）",
       "author": "media-bridge",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "首页示例插件：11 行 TMDB 榜单 / 趋势 / 分类 / 平台 / 公司 / 地区 / 随机推荐。token 与行参数都归它自己",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 26987,
-      "md5": "ad3aa27368b9945190b6c9428630bc02",
-      "path": "packages/home/example/example-1.0.0.tar.gz"
+      "bytes": 26937,
+      "md5": "ff181d4e7932e4eb2d1eb9c0e5d242a2",
+      "path": "packages/home/example/example-1.0.1.tar.gz"
     },
     {
       "type": "home",
       "id": "missav",
       "name": "MissAV 首页",
       "author": "media-bridge",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "MissAV 首页插件：今日 / 本周 / 本月热门、新作、中文字幕与各分类浏览做成客户端媒体库行；站点基地址、封面基地址与逐行入口路径都由插件自己存",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 22717,
-      "md5": "ee10cf685d4a6be94caacba8e0c4c1b9",
-      "path": "packages/home/missav/missav-1.0.0.tar.gz"
+      "bytes": 22733,
+      "md5": "e2603ec21baa15388c753d23d61530e1",
+      "path": "packages/home/missav/missav-1.0.1.tar.gz"
     },
     {
       "type": "metadata",
       "id": "missav",
       "name": "MissAV 元数据",
       "author": "media-bridge",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "元数据域 missav：按条目编号（slug）取影片页元数据、按名字搜索；站点与封面基地址、缓存都归它自己",
       "domain": "missav",
       "hasWebui": true,
       "depends": [],
-      "bytes": 25512,
-      "md5": "138070ebf80d6a160d2701f00a9040b1",
-      "path": "packages/metadata/missav/missav-1.0.0.tar.gz"
+      "bytes": 25377,
+      "md5": "8a82ce70043a62a7f915dad19a1a1852",
+      "path": "packages/metadata/missav/missav-1.0.1.tar.gz"
     },
     {
       "type": "metadata",
       "id": "tmdb",
       "name": "TMDB",
       "author": "media-bridge",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "元数据域 tmdb：按条目坐标取元数据与一季分集、按名字搜索；token 与缓存都归它自己",
       "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 25382,
-      "md5": "fef015c0a6fedcebac9c4308ab844c92",
-      "path": "packages/metadata/tmdb/tmdb-1.0.0.tar.gz"
+      "bytes": 25689,
+      "md5": "f2dae1a0e8f4cb3a251d1fae6d952564",
+      "path": "packages/metadata/tmdb/tmdb-1.0.1.tar.gz"
     },
     {
       "type": "source",
       "id": "catpaw",
       "name": "猫爪源",
       "author": "media-bridge",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "猫爪源协议：自己托管源实例（下载包 / 起进程 / 端口 / 自动更新），对外给站点清单、候选、取播放项、解析地址与站点测速",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 48850,
-      "md5": "9303d1acb10c3d8a59ed9d6180718f31",
-      "path": "packages/source/catpaw/catpaw-1.0.0.tar.gz"
+      "bytes": 49241,
+      "md5": "f892e31ae2192aeef89677338b073de4",
+      "path": "packages/source/catpaw/catpaw-1.0.1.tar.gz"
     },
     {
       "type": "source",
       "id": "missav",
       "name": "MissAV 片源",
       "author": "media-bridge",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "把 MissAV 站作为一个可聚合的站点接进来：站内搜索取候选，影片页提 m3u8，播放地址带 Referer 等请求头",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24508,
-      "md5": "27c95180bff25715eec3b80c31577981",
-      "path": "packages/source/missav/missav-1.0.0.tar.gz"
+      "bytes": 24439,
+      "md5": "473049f09ae692681077fb3d9acc43b3",
+      "path": "packages/source/missav/missav-1.0.1.tar.gz"
     },
     {
       "type": "source",
       "id": "pikpak",
       "name": "PikPak 磁力片源",
       "author": "media-bridge",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "磁力搜索（Sukebei）→ PikPak 离线下载 → 取回可直连的播放地址；账号、令牌与保存目录都由插件自己保管",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 45416,
-      "md5": "1d8b9f4532c46644a35f9f3b46a0582e",
-      "path": "packages/source/pikpak/pikpak-1.0.1.tar.gz"
+      "bytes": 45301,
+      "md5": "779f67358277c814c26237627fbc2331",
+      "path": "packages/source/pikpak/pikpak-1.0.2.tar.gz"
     }
   ]
 }

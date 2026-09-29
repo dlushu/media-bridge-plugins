@@ -1,0 +1,8 @@
+# 插件源码属个人，不进本仓库
+plugins/
+
+# 打包产物与清单是仓库内容，必须提交（不忽略）：
+# packages/ index.json tools/ docs/
+
+.DS_Store
+node_modules/

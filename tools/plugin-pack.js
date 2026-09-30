@@ -12,6 +12,7 @@
  * 产物（写进 `--out`，**`.git` 一概不碰**）：
  *   index.json                                     清单（面板「插件库」拉的就是它）
  *   packages/<类型>/<id>/<id>-<版本>.tar.gz          包本体
+ *   packages/<类型>/<id>/update.json                自更新清单（**仅插件声明了 updateUrl 时**生成）
  *
  * **一次只打一个（或指定的几个）**：全量重建会把每个插件都重打一遍，
  * 改了一个插件时既慢，也让其余包的 md5 无谓地变。`--all` 留给"要一份干净的产物"时用。
@@ -140,18 +141,31 @@ function packOne(one, outRoot, tmpRoot) {
   declared.files = files;
   fs.writeFileSync(path.join(stage, 'plugin.json'), JSON.stringify(declared, null, 2) + '\n');
 
-  /* 按 (类型, id) 清旧包：升版本后不留着上一版（否则清单里会出现两条同 id 的条目） */
+  /* 按 (类型, id) 清旧包：升版本后不留着上一版（否则清单里会出现两条同 id 的条目）。
+   * update.json 也在同一个目录里，一并清掉后重写，避免指向已删除的旧包名。 */
   const pkgDir = path.join(outRoot, 'packages', m.type, m.id);
   fs.rmSync(pkgDir, { recursive: true, force: true });
   fs.mkdirSync(pkgDir, { recursive: true });
 
-  const rel = `packages/${m.type}/${m.id}/${m.id}-${m.version}.tar.gz`;
+  const pkgName = `${m.id}-${m.version}.tar.gz`;
+  const rel = `packages/${m.type}/${m.id}/${pkgName}`;
   const target = path.join(outRoot, rel);
   /* `-C <stage> .` ⇒ 包内顶层就是包内容（不套一层插件目录名） */
   execFileSync('tar', ['-czf', target, '-C', stage, '.'], { stdio: 'pipe' });
 
   const buf = fs.readFileSync(target);
   fs.rmSync(stage, { recursive: true, force: true });
+
+  /* 自更新清单（Magisk 式）：插件在 plugin.json 声明 updateUrl 指向这里。
+   * `url` 只写**同目录文件名**（相对引用），面板按 updateUrl 所在目录解析 ——
+   * 这样包托管在 GitHub raw 还是别的镜像都不用改打包配置。
+   * 不进 index.json：插件库那条路不依赖它（两条来路互相独立）。 */
+  if (m.updateUrl) {
+    const updateInfo = { version: m.version, url: pkgName, md5: md5(buf) };
+    const changelog = String(declared.changelog || '').trim();
+    if (changelog) updateInfo.changelog = changelog;
+    fs.writeFileSync(path.join(pkgDir, 'update.json'), JSON.stringify(updateInfo, null, 2) + '\n');
+  }
 
   return {
     type: m.type,

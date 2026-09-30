@@ -32,7 +32,7 @@
 
 ## 二、插件的身份与目录
 
-- **类型**：`metadata`（元数据）、`source`（源）、`home`（首页插件）。
+- **类型**：`metadata`（元数据）、`source`（源）、`home`（首页插件）、`output`（输出：给外部播放器/外部消费方的出口插件）。
 - **身份** = `(类型, 插件 id)`。同一个 `id` 在不同类型下是两个插件，互不冲突。
 - **目录布局**（都在数据目录下）：
 
@@ -52,13 +52,15 @@
   | `id` | 是 | 反向域名风格，**同一类型内唯一**（身份 = `(类型, id)`） |
   | `name` | 是 | 显示名 |
   | `version` | 是 | 版本 |
-  | `type` | 是 | `metadata` / `source` / `home` |
+  | `type` | 是 | `metadata` / `source` / `home` / `output` |
   | `main` | — | 入口文件，默认 `index.js` |
   | `domain` | 元数据插件必填 | 它注册的**域 id**（条目 Id 的前缀，见 [ADR-0031](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0031-metadata-by-domain.md)） |
   | `series` | — | 元数据插件：剧集式（默认 `true`）还是电影式 |
   | `webui` | — | webui 入口（相对包目录，如 `ui/index.html`） |
   | `files` | — | `{ 相对路径: md5 }` —— 给了就逐文件核对（第二道校验） |
   | `depends` | — | 依赖的域 id 或 `类型:id`；**缺依赖如实失败并点名**，不半启动 |
+  | `ingress` | — | 外部 HTTP 入口的鉴权声明 `{ public: [], token: [] }`，只对 `ui/**`、`api/**` 两条路径生效；缺省全走面板登录门禁。写法与语义见第十一节 |
+  | `updateUrl` | — | **插件自更新清单**地址（http(s)，Magisk 式，见下）；不写就只能从插件库更新 |
   | `description` | — | 一句话说明 |
   | `author` | — | 作者署名（插件库与管理页里显示；不写就不显示这一行） |
 
@@ -92,6 +94,32 @@
   （手写的清单里没人声明 `files`，第二道校验原先形同虚设），随后写出 `index.json`。
   ⇒ 插件源码留在本仓库本地（`plugins/` 不进版本库），版本库里只收**产物**。
 
+### 插件自更新（Magisk 式 `updateUrl`）
+
+除了插件库，插件还能**自己声明去哪查新版** —— 和 Magisk 模块在模块里写更新地址同一个路子：
+
+1. 插件在 `plugin.json` 写 `updateUrl`，指向一个自己的小清单（http(s)）。本仓库插件默认指向
+   `packages/<类型>/<id>/update.json`，`plugin-pack.js` 打包时**自动生成**这个文件（与包同目录）。
+2. 清单形状：
+
+   ```json
+   { "version": "1.0.2",
+     "url": "forwardwidgets-1.0.2.tar.gz",
+     "md5": "（可选；包整体 md5，给了就当第一道校验）",
+     "changelog": "（可选；一句话更新说明）" }
+   ```
+
+   `url` 可以写绝对 http(s) 地址，也可以写**同目录文件名**（打包工具默认这么写，
+   面板按 `updateUrl` 所在目录解析），换成别的托管镜像也不用改包。
+3. 管理页对声明了 `updateUrl` 的插件显示「更新」按钮：`GET /api/plugins/<类型>/<id>/update-check`
+   查清单（60 秒缓存，`?refresh=1` 绕过），有新版时确认后 `POST /api/plugins/<类型>/<id>/update`
+   一键下载换装。**插件库（`index.json`）不参与这条链路**，包没被任何仓库收录也能自更新。
+4. 安全口径：`updateUrl` 与清单里的 `url` 都只收 http(s)（相对文件名解析完也必须是 http(s)）；
+   下载的包仍走**同一套两道 md5 校验**；更新包的 `(类型, id)` 必须与已装插件一致、
+   清单声明的版本必须与包内 `plugin.json` 一致 —— 不允许借"更新"把包换成另一个身份。
+5. **装完自动重启**：覆盖安装（手动上传 / 插件库更新 / 自更新，三条路同一套）会先等旧进程真的退出、
+   换新包，再按原来的启用状态把新进程起回来；原来没启用的装完仍不启用。
+
 ---
 
 ## 三、执行模型
@@ -122,10 +150,48 @@
   动作名一律用**语义名**（`站点清单` / `搜索` / `取播放项` / `解析地址` / …），
   不写成 `/config`、`/search` 这类路径样式 —— 免得后来者以为还要发 HTTP。
 - 插件**内部**要不要给自己的实例开端口，是插件自己的事；面板不参与分配、也不依赖它。
-- **插件入口的形状**：`module.exports = { actions: { 动作名: async (args, ctx) => 返回值 } }`。
-  `ctx` 只给三样东西：`type` / `id`（自己是谁）、`dataDir`（自己的数据目录）、`log(...)`（写进面板日志）。
+- 插件入口的形状：`module.exports = { actions: { 动作名: async (args, ctx) => 返回值 } }`。
+  `ctx` 给四样东西：`type` / `id`（自己是谁）、`dataDir`（自己的数据目录）、`log(...)`（写进面板日志）、
+  `hostCall(target, action, args)`（**反向调用宿主**，白名单制，见下）。
   面板**只做**"把请求转成动作、把返回值转回去"，不做别的（加载与分发由宿主的 `runner.js` 负责）。
 - 调试口径：面板把**每次请求与回复写进日志**（沿用现有源"留子进程尾部日志"的做法）。
+
+### 插件反向调用宿主：`ctx.hostCall`
+
+插件之间**仍然不能互相调用**；但 output 这类"出口"插件需要把面板已有的能力（首页榜单、聚合搜索 /
+详情 / 播放）转给外部消费方，所以宿主在管道上开了一条**反向通道**，且只暴露**白名单**里的动作：
+
+```
+ctx.hostCall(target, action, args) -> Promise<{ ok: true, value } | { ok: false, error: { code, message } }>
+```
+
+- 消息形状：插件 → 宿主 `{ type:'hostCall', id, target, action, args }`；
+  宿主 → 插件 `{ type:'hostCallReply', id, ok, value? , error? }`（`id` 由插件侧递增、自行配对）。
+  30 秒超时，宿主与插件两侧各自计时；宿主不在线 / 管道已断时调用 reject。
+- 当前白名单（以宿主代码 `server/modules/plugin/host-api.js` 为准）：
+
+  | target | action | 入参 | value |
+  |---|---|---|---|
+  | `home` | `plugins` | — | 已装的 `home` 插件清单 `[{id,type,name,enabled,running}]` |
+  | `home` | `rows` | `{pluginId}` | 该首页插件申报的行 |
+  | `home` | `run` | `{pluginId,rowId,startIndex,limit}` | `{items,total,dropped,dup,cached}`（items 已按 HomeItem 归一化） |
+  | `agg` | `sites` | — | 聚合站点清单 |
+  | `agg` | `search` | `{domain,keyword,page?}` | 聚合搜索结果 |
+  | `agg` | `detail` | `{domain, ...}`（source/site/vodId 快路径，或 name/year；剧集带 `season`/`episode`） | 聚合详情 |
+  | `agg` | `play` | `{domain,ref,clientHost?}` | `{urls,header,parse,nonHttp}` |
+
+- 白名单之外的 `target/action` 一律回 `NO_HOSTCALL`；**不转发任意内部调用、不暴露文件系统**。
+- output 插件的 `http` 动作应当把 hostCall 的失败码如实映射成 HTTP 状态
+  （`BAD_INPUT`/`NO_DOMAIN`/`NO_SITE`/`NO_SOURCE` → 400，`TIMEOUT` → 504，其余 → 502）。
+
+### 输出插件（`output`）
+
+- output 插件**不占端口、不接 Emby**，它就是一个"外部能匿名/持票访问的 HTTP 面 + 一组 hostCall 编排"：
+  典型例子是给外部播放器（如 Forward 播放器的 Widget）下发一个脚本，脚本再持**外部访问令牌**
+  回头访问本插件的 `api/**`，插件经 hostCall 取首页 / 搜索 / 详情 / 播放。
+- 插件自己负责：生成对外产物（脚本 / 配置）、把外部播放器的参数翻译成 hostCall 入参、
+  以及把播放结果整理成对方播放器认的形状（直连地址 + `customHeaders`，由对方原生播放器直连 CDN）。
+- **令牌绝不编进产物或下载 URL**：匿名产物里只能出现"怎么填令牌"的说明，不能出现明文令牌。
 
 ---
 
@@ -289,7 +355,8 @@ Emby 的 DTO 形状（面板负责转换，见 [ADR-0007](https://github.com/dlu
   插件侧只要认 `page` 参数）。
 - **媒体库 Id 由面板生成**：`catpawhome_` + base64url(`<插件id>|<行id>`)；稳定性由面板保证，
   插件看不到也不需要管这个 Id。
-- **插件没有回调面板的通道**：宿主给插件的上下文只有 `type` / `id` / `dataDir` / `log`，
+- **插件没有任意回调面板的通道**：宿主给插件的上下文只有 `type` / `id` / `dataDir` / `log`
+  （外加第四节那条**白名单制**的 `ctx.hostCall`，只能调宿主登记过的几个能力），
   插件之间也不能互相调用。因此首页插件取数要用的凭据（例如上游 token）**由插件自己存、自己带**，
   面板不代做也不下发。
 - HomeItem 字段表与严格归一化的规矩见 [emby-home-plugin.md](emby-home-plugin.md)。
@@ -361,19 +428,39 @@ Emby 的 DTO 形状（面板负责转换，见 [ADR-0007](https://github.com/dlu
   入口是**扫插件目录里的声明文件**发现的（给显示名、排序、指向哪个页面），没有中心注册表 ——
   参照 LuCI 的做法（见第十三节）。
 - **设置**：**声明归插件、存储也归插件**（都在插件自己的 `data/` 里）。
-- **两条路径**（都在 `/api/` 下 ⇒ **天然受门禁**，不必再往名单里加东西）：
+- **两条路径**（默认都在 `/api/` 下 ⇒ **受面板登录门禁**；插件可在 `plugin.json` 用
+  `ingress` 逐路径放开，见下）：
 
   | 路径 | 作用 |
   |---|---|
   | `GET /api/plugins/<类型>/<id>/ui/**` | 插件的 webui 静态文件（`/ui/` 之后相对 **webui 入口所在目录**解析，所以页面里 `./x.js` 就是 `ui/x.js`） |
   | `ANY /api/plugins/<类型>/<id>/api/**` | **转发给插件**：面板把这一次请求转成**动作 `http`**（见下） |
 
+- **ingress 声明**（`plugin.json` 可加；不写 = 两条路径都要面板登录 cookie）：
+
+  ```json
+  { "ingress": { "public": ["api/widget.js"], "token": ["api/**"] } }
+  ```
+
+  - 名单条目是相对路径，形如 `ui/xxx` / `api/xxx`，支持 `*`（单层内任意）与 `/**`（任意层级）；
+    写不合法（越界 `..`、绝对路径、别的段名）会在安装时按坏清单拒绝。
+  - `public`：**完全匿名**，谁都能访问（只该放不含秘密的静态产物，例如一个脚本）。
+  - `token`：要**外部访问令牌**（或有效登录 cookie）。令牌由面板生成
+    （`mbp_` + 48 位十六进制；面板设置页可取 / 重置，重置后旧票立即失效），
+    三种携带方式等价：query `?token=`、`Authorization: Bearer`、`X-Access-Token` 头。
+    对不上或没带 ⇒ 401。`public` 命中优先于 `token`。
+  - 两条名单都没命中的路径，照旧走面板登录门禁。
+  - **安全口径**：令牌只能证明"有权访问这个插件的 ingress"，不等于面板登录态 ——
+    插件经 hostCall 能做的事以宿主白名单为限；秘密（令牌、Cookie）绝不允许编进 `public` 产物。
+
 - **转发用的动作名固定是 `http`**，入参 / 出参：
 
   ```
-  入参  { method, path, query, body, contentType }
+  入参  { method, path, query, body, contentType, host, proto }
         · path   = `/api/` 之后的那一段（例如 `/save`）
+        · query  = 普通对象（URL query；面板已剥掉用于鉴权的 token 键，不会下发给插件）
         · body   = **UTF-8 字符串**（不是 Buffer；插件侧 JSON.parse(body) 就能用）
+        · host/proto = 这次外部请求的 Host 头与协议（output 插件拼自描述地址时用）
   出参  { status?, body, contentType? }
         · status 缺省 200；body 是对象就按 JSON 回，是字符串就按 contentType 回
   ```
@@ -386,7 +473,8 @@ Emby 的 DTO 形状（面板负责转换，见 [ADR-0007](https://github.com/dlu
   插件想怎么设计自己的接口都行，插件的设置声明与存储也都在它自己那边（见下）。
 - **调试台**：管理页可以手发一条动作（`POST /api/plugins/<类型>/<id>/call`），
   面板同样**不解释**动作与参数 —— 原样转过去、原样显示回来。
-- **门禁**：webui 的静态资源与上面那条转发通道**都必须受门禁**
+- **门禁**：webui 的静态资源与上面那条转发通道**默认都必须受面板登录门禁**；
+  只有 `ingress` 名单逐路径声明了的，才能匿名（`public`）或凭外部访问令牌（`token`）放开
   （当前静态文件是免登录的，不能让插件的设置页变成公开页面）。
 - ⚠️ **两个层级要分开**：**插件设置页**属于插件（管理它自己的实例）；
   **实例配置中心**属于实例。导航**不再给每个运行中的实例单独开子页**，收进插件的设置页内部。

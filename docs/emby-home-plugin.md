@@ -127,7 +127,7 @@
 | `backdrop` | — | 完整 http(s) URL，横图 |
 | `genres` | — | 字符串数组（最多 20 个） |
 | `providerIds` | — | 对象，如 `{ <域>: "<编号>" }` |
-| `catpaw` | — | `{ site, vodId }` |
+| `sourceLoc` | — | 可播放定位 `{ source?, site, vodId }`：`source` 是 `源插件id/实例id`（缺省由面板按站点补），output 插件拿它走聚合详情/播放 |
 
 丢字段的规矩：
 

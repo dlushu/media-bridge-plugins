@@ -21,7 +21,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const TYPES = ['metadata', 'source', 'home'];
+const TYPES = ['metadata', 'source', 'home', 'output'];
 const ID_RE = /^[a-z][a-z0-9._-]{1,63}$/i;
 
 const md5 = (buf) => crypto.createHash('md5').update(buf).digest('hex');
@@ -92,6 +92,11 @@ function readManifest(dir) {
   const webui = String(raw.webui || '').trim();
   if (webui && !fs.existsSync(path.join(dir, webui))) throw fail(`webui 入口不存在：${webui}`);
 
+  /* 自更新清单地址（可选；与面板 contract.js 同口径）：只收 http(s)，
+   * 面板装包后会主动 GET 它，不能让 file:// 之类从清单里混进来。 */
+  const updateUrl = String(raw.updateUrl || '').trim();
+  if (updateUrl && !/^https?:\/\//i.test(updateUrl)) throw fail('updateUrl 必须是 http(s) 地址');
+
   const files = raw.files && typeof raw.files === 'object' ? raw.files : null;
   if (files) {
     for (const [rel, want] of Object.entries(files)) {
@@ -113,6 +118,7 @@ function readManifest(dir) {
     main,
     domain,
     webui,
+    updateUrl,
     depends: Array.isArray(raw.depends) ? raw.depends.map((x) => String(x)) : [],
     description: String(raw.description || '').trim(),
   };

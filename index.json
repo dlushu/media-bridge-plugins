@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-30T12:59:49.302Z",
+  "generatedAt": "2026-09-30T15:23:32.527Z",
   "plugins": [
     {
       "type": "home",
@@ -12,8 +12,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 26937,
-      "md5": "ff181d4e7932e4eb2d1eb9c0e5d242a2",
+      "bytes": 26984,
+      "md5": "03db4ebc1562420290e32e9bbcbdfebd",
       "path": "packages/home/example/example-1.0.1.tar.gz"
     },
     {
@@ -26,8 +26,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 22733,
-      "md5": "e2603ec21baa15388c753d23d61530e1",
+      "bytes": 22785,
+      "md5": "ad91d1e597ae61f380119533126aeccf",
       "path": "packages/home/missav/missav-1.0.1.tar.gz"
     },
     {
@@ -40,8 +40,8 @@
       "domain": "missav",
       "hasWebui": true,
       "depends": [],
-      "bytes": 25377,
-      "md5": "8a82ce70043a62a7f915dad19a1a1852",
+      "bytes": 25435,
+      "md5": "971f501052177d10cc5c7c7433c40547",
       "path": "packages/metadata/missav/missav-1.0.1.tar.gz"
     },
     {
@@ -54,8 +54,8 @@
       "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 25689,
-      "md5": "f2dae1a0e8f4cb3a251d1fae6d952564",
+      "bytes": 25756,
+      "md5": "3aaf2941c5dbd4f2ba2d1246a60389e3",
       "path": "packages/metadata/tmdb/tmdb-1.0.1.tar.gz"
     },
     {
@@ -63,14 +63,14 @@
       "id": "forwardwidgets",
       "name": "ForwardWidgets 输出",
       "author": "media-bridge",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "把面板的首页行与聚合播放能力输出成 ForwardWidgets 模块：外部播放器下载 widget.js（匿名），模块运行时凭外部访问令牌调面板，播放时把源插件给的 UA/Cookie 注入播放器直连 CDN",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 11408,
-      "md5": "1479c0f12e9a0eb71d2b9b68522b2d5e",
-      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.0.tar.gz"
+      "bytes": 12636,
+      "md5": "080231391c180bea5e855e48da53af57",
+      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.1.tar.gz"
     },
     {
       "type": "source",
@@ -82,8 +82,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 51743,
-      "md5": "7d212e15325667e00c088ccc196c3b7d",
+      "bytes": 51808,
+      "md5": "6311598c65752b01bb32b600bd482752",
       "path": "packages/source/catpaw/catpaw-1.0.2.tar.gz"
     },
     {
@@ -96,8 +96,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24439,
-      "md5": "473049f09ae692681077fb3d9acc43b3",
+      "bytes": 24484,
+      "md5": "512a5eed402b661489d6c14cae179d87",
       "path": "packages/source/missav/missav-1.0.1.tar.gz"
     },
     {
@@ -110,8 +110,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 59523,
-      "md5": "868ab47f59dc39b8e3eadf2af11e9f9a",
+      "bytes": 59586,
+      "md5": "264f7555cb8ac116a10b80141ca16f5d",
       "path": "packages/source/pikpak/pikpak-1.0.6.tar.gz"
     }
   ]

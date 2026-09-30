@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-30T15:44:55.232Z",
+  "generatedAt": "2026-09-30T15:54:15.512Z",
   "plugins": [
     {
       "type": "home",
@@ -105,14 +105,14 @@
       "id": "pikpak",
       "name": "PikPak 磁力片源",
       "author": "media-bridge",
-      "version": "1.0.6",
+      "version": "1.0.7",
       "description": "磁力搜索（Sukebei、BTSearch 两个站）→ PikPak 离线下载 → 取回可直连的播放地址；账号、令牌与保存目录都由插件自己保管",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 59586,
-      "md5": "264f7555cb8ac116a10b80141ca16f5d",
-      "path": "packages/source/pikpak/pikpak-1.0.6.tar.gz"
+      "bytes": 60539,
+      "md5": "282954621a0cdc63267e1dea752ceff9",
+      "path": "packages/source/pikpak/pikpak-1.0.7.tar.gz"
     }
   ]
 }

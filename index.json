@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-30T17:19:14.945Z",
+  "generatedAt": "2026-09-30T17:43:58.540Z",
   "plugins": [
     {
       "type": "home",
@@ -63,14 +63,14 @@
       "id": "forwardwidgets",
       "name": "ForwardWidgets 输出",
       "author": "media-bridge",
-      "version": "1.0.5",
+      "version": "1.0.7",
       "description": "把面板的首页行与聚合播放能力输出成 ForwardWidgets 模块：外部播放器下载 widget.js（匿名），模块运行时凭外部访问令牌调面板，播放时把源插件给的 UA/Cookie 注入播放器直连 CDN",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 18282,
-      "md5": "d600504981adbc4963f7e255af19f44d",
-      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.5.tar.gz"
+      "bytes": 19002,
+      "md5": "8ce7cbf87accac64a38ad42a54ebb82c",
+      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.7.tar.gz"
     },
     {
       "type": "source",

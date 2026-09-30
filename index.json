@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-30T12:12:40.087Z",
+  "generatedAt": "2026-09-30T12:59:49.302Z",
   "plugins": [
     {
       "type": "home",
@@ -59,6 +59,20 @@
       "path": "packages/metadata/tmdb/tmdb-1.0.1.tar.gz"
     },
     {
+      "type": "output",
+      "id": "forwardwidgets",
+      "name": "ForwardWidgets 输出",
+      "author": "media-bridge",
+      "version": "1.0.0",
+      "description": "把面板的首页行与聚合播放能力输出成 ForwardWidgets 模块：外部播放器下载 widget.js（匿名），模块运行时凭外部访问令牌调面板，播放时把源插件给的 UA/Cookie 注入播放器直连 CDN",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 11408,
+      "md5": "1479c0f12e9a0eb71d2b9b68522b2d5e",
+      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.0.tar.gz"
+    },
+    {
       "type": "source",
       "id": "catpaw",
       "name": "猫爪源",
@@ -91,14 +105,14 @@
       "id": "pikpak",
       "name": "PikPak 磁力片源",
       "author": "media-bridge",
-      "version": "1.0.5",
+      "version": "1.0.6",
       "description": "磁力搜索（Sukebei、BTSearch 两个站）→ PikPak 离线下载 → 取回可直连的播放地址；账号、令牌与保存目录都由插件自己保管",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 58636,
-      "md5": "c720c6ed9205257657e78b32ae80832e",
-      "path": "packages/source/pikpak/pikpak-1.0.5.tar.gz"
+      "bytes": 59523,
+      "md5": "868ab47f59dc39b8e3eadf2af11e9f9a",
+      "path": "packages/source/pikpak/pikpak-1.0.6.tar.gz"
     }
   ]
 }

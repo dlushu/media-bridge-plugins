@@ -31,7 +31,7 @@ index.json                                插件清单（面板「插件库」�
       "name": "<显示名>",
       "author": "<作者署名>",
       "version": "1.0.0",
-      "description": "元数据域 <域 id>：按条目坐标取元数据与一季分集、按名字搜索；token 与缓存都归它自己",
+      "description": "元数据域 <域 id>：按条目坐标取元数据与一季分集、按名字搜索",
       "domain": "<域 id>",
       "hasWebui": true,
       "depends": [],

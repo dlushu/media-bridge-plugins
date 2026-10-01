@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-01T06:56:06.244Z",
+  "generatedAt": "2026-10-01T09:45:44.801Z",
   "plugins": [
     {
       "type": "home",
@@ -61,16 +61,16 @@
     {
       "type": "output",
       "id": "forwardwidgets",
-      "name": "ForwardWidgets 输出",
+      "name": "FW/Rex Widgets 输出",
       "author": "media-bridge",
-      "version": "1.0.8",
-      "description": "把面板的首页行与聚合播放能力输出成 ForwardWidgets 模块：外部播放器下载 widget.js（匿名），模块运行时凭外部访问令牌调面板；裸用可播的线路（playVia:client）交给面板流入口 302/中继，要请求头的线路（playVia:proxy）起播前解析并把头注入播放器直连 CDN",
+      "version": "1.0.13",
+      "description": "把面板的首页行与聚合播放能力输出成 FW/Rex Widgets 模块：外部播放器下载 widget.js（匿名），模块运行时凭外部访问令牌调面板；裸用可播的线路（playVia:client）交给面板流入口 302/中继，要请求头的线路（playVia:proxy）起播前解析并把头注入播放器直连 CDN",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 19855,
-      "md5": "6a003fe33a4a8f71b704bd3879ad6708",
-      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.8.tar.gz"
+      "bytes": 21658,
+      "md5": "d3d4b1a5332a6b18167cf54eb1192302",
+      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.13.tar.gz"
     },
     {
       "type": "source",

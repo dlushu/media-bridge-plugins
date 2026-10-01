@@ -104,7 +104,7 @@
 
    ```json
    { "version": "1.0.2",
-     "url": "forwardwidgets-1.0.2.tar.gz",
+     "url": "fwrex-1.0.2.tar.gz",
      "md5": "（可选；包整体 md5，给了就当第一道校验）",
      "changelog": "（可选；一句话更新说明）" }
    ```
@@ -192,7 +192,7 @@ ctx.hostCall(target, action, args) -> Promise<{ ok: true, value } | { ok: false,
 ### 输出插件（`output`）
 
 - output 插件**不占端口、不接 Emby**，它就是一个"外部能匿名/持票访问的 HTTP 面 + 一组 hostCall 编排"：
-  典型例子是给外部播放器（如 Forward 播放器的 Widget）下发一个脚本，脚本再持**外部访问令牌**
+  典型例子是给外部播放器（如 FW/Rex 播放器的 Widget）下发一个脚本，脚本再持**外部访问令牌**
   回头访问本插件的 `api/**`，插件经 hostCall 取首页 / 搜索 / 详情 / 播放。
 - 插件自己负责：生成对外产物（脚本 / 配置）、把外部播放器的参数翻译成 hostCall 入参、
   以及把播放结果整理成对方播放器认的形状（直连地址 + `customHeaders`，由对方原生播放器直连 CDN）。
@@ -228,15 +228,22 @@ ctx.hostCall(target, action, args) -> Promise<{ ok: true, value } | { ok: false,
   | 值 | 含义 | 客户端怎么取 |
   |---|---|---|
   | `'client'`（**缺省**） | 地址**能裸用**：客户端直连即可起播 | 客户端拿 `ref` 走面板的流端点，由面板 302 到真实地址（回环地址由插件按 `clientHost` 换成客户端可达的域名） |
-  | `'proxy'` | 地址**必须带一串鉴权头**才能播（代理在源之外，头由源给） | 出口插件（output）负责先 `play` 取到 `{urls, header}`，把头和地址一起交给客户端 |
+  | `'proxy'` | 地址**必须带一串鉴权头**才取得动（缺了就是 403/断流，头由源给） | 出口插件二选一：① 自己 `play` 取到 `{urls, header}` 并**把头交给客户端**（须宿主支持）；② 把这条线路交回面板的流端点、带上 `playVia=proxy`，由面板**代持头**中继（见面板仓库 [ADR-0042](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0042-auth-line-byte-relay.md)） |
 
   - **缺省就是 `client`**：不写等于声明"裸用可播"。**面板一律按标注执行，不做类型探测式的兜底** ——
     漏标成 `proxy` 由插件自负（客户端会拿不到头、播不了），标成 `client` 而实际要头同样自负。
+  - **`proxy` 的语义是"缺了这串头就播不动"，不是"源顺手给了头"**：源回 `header` 里常有
+    信息性的头（`Referer` / `Origin` / 页面 UA），缺了照样能播 —— 那种线路该标 `client`。
+    判据只有一条：**这条线路不带头发出去，客户端能不能播**。标错两个方向都吃亏：
+    漏标 `proxy` → 客户端拿不到头、播不了；把可裸用的标成 `proxy` → 白白让面板代持流量。
   - **它是声明性标注，不是探测结果**：`detail` 阶段还没有地址可测（地址要 `play` 才拿得到），
     所以这条只能由插件按自己对源的了解写死；一个插件内可以逐条线路不同。
   - **`.m3u8` 之类 HLS 清单**：`client` 线路一样裸用，但客户端不能直接 302（相对路径会失基），
     得走面板流端点的 **200 中继**（把清单里的相对地址补成绝对），依据见面板仓库
     [ADR-0040](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0040-hls-playlist-relay.md)。
+  - **把线路交回面板时怎么声明**：面板流端点
+    `GET {panel}/api/agg/stream?domain=&ref=&token=` 另认一个 `playVia` 参数（缺省 `client`）；
+    出口插件按 `detail` 里那条线路的 `playVia` 原样带上即可。不带 = 面板按 `client` 落（302 / 清单中继）。
 - **`ref` 的形状约定只有一层**：`<插件 id>/<插件自己定的东西>`。面板只按**第一段**路由，
   其余一个字都不解释 —— 它把 `ref` 原样存进 `MediaSourceId`，播放时原样交回来。
   本例（猫爪源）里面是 base64url 的 JSON：实例 / 站点 / 线路 / 条目 id / 集 id / 定位坐标。

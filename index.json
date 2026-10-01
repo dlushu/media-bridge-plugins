@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-09-30T17:43:58.540Z",
+  "generatedAt": "2026-10-01T06:56:06.244Z",
   "plugins": [
     {
       "type": "home",
@@ -63,42 +63,42 @@
       "id": "forwardwidgets",
       "name": "ForwardWidgets 输出",
       "author": "media-bridge",
-      "version": "1.0.7",
-      "description": "把面板的首页行与聚合播放能力输出成 ForwardWidgets 模块：外部播放器下载 widget.js（匿名），模块运行时凭外部访问令牌调面板，播放时把源插件给的 UA/Cookie 注入播放器直连 CDN",
+      "version": "1.0.8",
+      "description": "把面板的首页行与聚合播放能力输出成 ForwardWidgets 模块：外部播放器下载 widget.js（匿名），模块运行时凭外部访问令牌调面板；裸用可播的线路（playVia:client）交给面板流入口 302/中继，要请求头的线路（playVia:proxy）起播前解析并把头注入播放器直连 CDN",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 19002,
-      "md5": "8ce7cbf87accac64a38ad42a54ebb82c",
-      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.7.tar.gz"
+      "bytes": 19855,
+      "md5": "6a003fe33a4a8f71b704bd3879ad6708",
+      "path": "packages/output/forwardwidgets/forwardwidgets-1.0.8.tar.gz"
     },
     {
       "type": "source",
       "id": "catpaw",
       "name": "猫爪源",
       "author": "media-bridge",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "猫爪源协议：自己托管源实例（下载包 / 起进程 / 端口 / 自动更新），对外给站点清单、候选、取播放项、解析地址与站点测速",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 51808,
-      "md5": "6311598c65752b01bb32b600bd482752",
-      "path": "packages/source/catpaw/catpaw-1.0.2.tar.gz"
+      "bytes": 51968,
+      "md5": "c2c3fc4539f5422572e331df0ea8fc1f",
+      "path": "packages/source/catpaw/catpaw-1.0.3.tar.gz"
     },
     {
       "type": "source",
       "id": "missav",
       "name": "MissAV 片源",
       "author": "media-bridge",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "把 MissAV 站作为一个可聚合的站点接进来：站内搜索取候选，影片页提 m3u8，播放地址带 Referer 等请求头",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24484,
-      "md5": "512a5eed402b661489d6c14cae179d87",
-      "path": "packages/source/missav/missav-1.0.1.tar.gz"
+      "bytes": 24626,
+      "md5": "bd3b62cf7be25e9137715b84ffe29548",
+      "path": "packages/source/missav/missav-1.0.2.tar.gz"
     },
     {
       "type": "source",

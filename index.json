@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-01T11:45:58.704Z",
+  "generatedAt": "2026-10-02T09:55:44.472Z",
   "plugins": [
     {
       "type": "home",
@@ -63,14 +63,14 @@
       "id": "fwrex",
       "name": "FW/Rex Widgets 输出",
       "author": "media-bridge",
-      "version": "1.0.14",
+      "version": "1.0.15",
       "description": "把面板的首页行与聚合播放能力输出成 FW/Rex Widgets 模块：外部播放器下载 widget.js（匿名），模块运行时凭外部访问令牌调面板；裸用可播的线路（playVia:client）交给面板流入口 302/中继，要请求头的线路（playVia:proxy）起播前解析并把头注入播放器直连 CDN",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 21669,
-      "md5": "01c01754878eae10d68529fce3a6077d",
-      "path": "packages/output/fwrex/fwrex-1.0.14.tar.gz"
+      "bytes": 21719,
+      "md5": "40e138ec1ff26f25425853220272f5b3",
+      "path": "packages/output/fwrex/fwrex-1.0.15.tar.gz"
     },
     {
       "type": "source",
@@ -85,6 +85,20 @@
       "bytes": 51968,
       "md5": "c2c3fc4539f5422572e331df0ea8fc1f",
       "path": "packages/source/catpaw/catpaw-1.0.3.tar.gz"
+    },
+    {
+      "type": "source",
+      "id": "catpaw-resolve",
+      "name": "猫爪源自解析版",
+      "author": "media-bridge",
+      "version": "1.0.3",
+      "description": "猫爪源变体：自己托管猫爪实例（下载源包 / 起进程 / 端口 / 自动更新），站点清单、候选、取播放项照旧打实例；区别在播放——分享链的线路由插件自己出，夸克与 UC 各按档位展开成「原画」与「转码」、百度展开成「原画」（转存链路）与「无限」（签名直链）、123 云盘展开成「123无限」与「P123」、其余各家各出「原画」一条，本地解析取回地址、不依赖实例的 /proxy 取流；本地能解析的十一家是夸克 / UC / 115 / 百度 / 迅雷 / 阿里云盘 / 天翼云盘 / PikPak / 123 云盘 / 移动云盘(139) / 光鸭云盘。设置页登录：夸克 / UC / 115 / 百度 / 阿里云盘 / PikPak / 光鸭 七家支持扫码登录，天翼支持账号密码登录（撞图形验证码会如实报错）也可手填 Cookie，迅雷走账号密码 OAuth（登录态自动续期），PikPak 与光鸭的分享链必须登录（走转存自有盘那条路），123 云盘只有 P123 档要凭据，移动云盘全程匿名不收凭据；解析不了的分享线路（未铺的网盘、秒传这类特例）直接过滤掉，不落回实例 /play",
+      "domain": "",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 182654,
+      "md5": "cf6d081deead69614baae2d724065226",
+      "path": "packages/source/catpaw-resolve/catpaw-resolve-1.0.3.tar.gz"
     },
     {
       "type": "source",

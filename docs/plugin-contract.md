@@ -244,6 +244,10 @@ ctx.hostCall(target, action, args) -> Promise<{ ok: true, value } | { ok: false,
   - **把线路交回面板时怎么声明**：面板流端点
     `GET {panel}/api/agg/stream?domain=&ref=&token=` 另认一个 `playVia` 参数（缺省 `client`）；
     出口插件按 `detail` 里那条线路的 `playVia` 原样带上即可。不带 = 面板按 `client` 落（302 / 清单中继）。
+  - **面板自己的 Emby 客户端入口（`/api/emby/*`）也按这同一份 `playVia` 落法**，且**不需要插件多传什么**：
+    面板拼版本列表时就把该线路的 `playVia` 编进了版本 Id（`MediaSourceId`，读的是 `detail.lines[].playVia`），
+    起播时自己取回判档 —— `proxy` 线路在 Emby 里同样由面板**代持头中继**（非清单字节中继 / 清单子地址中继）。
+    依据见面板仓库 [ADR-0044](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0044-emby-stream-playvia-relay.md)。
 - **`ref` 的形状约定只有一层**：`<插件 id>/<插件自己定的东西>`。面板只按**第一段**路由，
   其余一个字都不解释 —— 它把 `ref` 原样存进 `MediaSourceId`，播放时原样交回来。
   本例（猫爪源）里面是 base64url 的 JSON：实例 / 站点 / 线路 / 条目 id / 集 id / 定位坐标。

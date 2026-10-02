@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-02T12:41:54.472Z",
+  "generatedAt": "2026-10-02T13:17:29.880Z",
   "plugins": [
     {
       "type": "home",
@@ -63,14 +63,14 @@
       "id": "fwrex",
       "name": "FW/Rex Widgets 输出",
       "author": "media-bridge",
-      "version": "1.0.16",
+      "version": "1.0.18",
       "description": "把面板聚合播放输出成 FW/Rex Widgets 模块，供外部播放器调用",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 21634,
-      "md5": "7036690de94b28403888a1afdb22a0b2",
-      "path": "packages/output/fwrex/fwrex-1.0.16.tar.gz"
+      "bytes": 23365,
+      "md5": "29baaa134d7fa646f77b6090718f8783",
+      "path": "packages/output/fwrex/fwrex-1.0.18.tar.gz"
     },
     {
       "type": "source",

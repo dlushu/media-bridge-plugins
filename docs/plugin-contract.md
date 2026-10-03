@@ -33,15 +33,20 @@
 ## 二、插件的身份与目录
 
 - **类型**：`metadata`（元数据）、`source`（源）、`home`（首页插件）、`output`（输出：给外部播放器/外部消费方的出口插件）。
-- **身份** = `(类型, 插件 id)`。同一个 `id` 在不同类型下是两个插件，互不冲突。
-- **目录布局**（都在数据目录下）：
+- **身份** = `插件 id`。一个 id 只有一个目录、一个进程、一个开关、一份数据；
+  但一个包可以**同时是多个平级类型**（`types: ["home","metadata","source"]`，见 [ADR-0046](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0046-plugin-multiple-types.md)）。
+  旧的单类型包（只写 `type`）仍然全部兼容。
+- **目录布局**（都在数据目录下；v2 起拍平，不再按类型分目录）：
 
   ```
-  plugins/<类型>/<插件 id>/          包本体（代码 + 自带 webui 静态文件 + 声明文件）
-  plugins/<类型>/<插件 id>/data/     插件自己的数据目录（设置与缓存都在这里）
+  plugins/<插件 id>/                  包本体（代码 + 自带 webui 静态文件 + 声明文件）
+  plugins/<插件 id>/data/             插件自己的数据目录（设置与缓存都在这里）
   ```
 
-- **包**：一个 `tar.gz`。安装 = 解到 `plugins/<类型>/<id>/`（解出来的目录多一层也认）。
+  多类型包各角色的代码建议放在 `roles/<类型>/` 子目录，**写盘的文件名按角色隔开**
+  （例如 `data/home-settings.json`、`data/metadata-settings.json`）——共享一份数据，但不能互相踩文件。
+
+- **包**：一个 `tar.gz`。安装 = 解到 `plugins/<插件 id>/`（解出来的目录多一层也认）。
   **两道校验**（与源包同一套，见 [ADR-0015](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0015-source-bundle-integrity.md)）：
   ① 包本身的 md5（发布方给的那个，可省）；② 清单里 `files` 声明的**逐个文件** md5。
   任一道对不上就**当场拒绝**，不"先装上再说"、也不拿实际值去覆写清单假装成功。
@@ -49,14 +54,14 @@
 
   | 字段 | 必填 | 说明 |
   |---|---|---|
-  | `id` | 是 | 反向域名风格，**同一类型内唯一**（身份 = `(类型, id)`） |
+  | `id` | 是 | 反向域名风格，**全局唯一**（身份就是 id） |
   | `name` | 是 | 显示名 |
   | `version` | 是 | 版本 |
-  | `type` | 是 | `metadata` / `source` / `home` / `output` |
+  | `types` | 是* | 类型数组，如 `["metadata","home"]`；顺序即展示顺序，第一个是"代表类型"。*旧包可只写单个 `type`，按单元素数组兼容 |
   | `main` | — | 入口文件，默认 `index.js` |
-  | `domain` | 元数据插件必填 | 它注册的**域 id**（条目 Id 的前缀，见 [ADR-0031](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0031-metadata-by-domain.md)） |
-  | `series` | — | 元数据插件：剧集式（默认 `true`）还是电影式 |
-  | `webui` | — | webui 入口（相对包目录，如 `ui/index.html`） |
+  | `domain` | 含 `metadata` 类型时必填 | 它注册的**域 id**（条目 Id 的前缀，见 [ADR-0031](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0031-metadata-by-domain.md)） |
+  | `series` | — | 元数据角色：剧集式（默认 `true`）还是电影式 |
+  | `webui` | — | webui 入口。单类型包可写字符串（`ui/index.html`）；多类型包写 **`{ 类型: 入口 }`** 映射（`{"home":"roles/home/ui/index.html"}`），哪个类型给了入口，侧栏就在哪一栏挂一个页面 |
   | `files` | — | `{ 相对路径: md5 }` —— 给了就逐文件核对（第二道校验） |
   | `depends` | — | 依赖的域 id 或 `类型:id`；**缺依赖如实失败并点名**，不半启动 |
   | `ingress` | — | 外部 HTTP 入口的鉴权声明 `{ public: [], token: [] }`，只对 `ui/**`、`api/**` 两条路径生效；缺省全走面板登录门禁。写法与语义见第十一节 |
@@ -74,23 +79,24 @@
 
 ### 插件从哪来：插件库与手动安装
 
-两条来路，做的都是"解一个 `tar.gz` 装进 `plugins/<类型>/<id>/`"，区别只在包从哪来。
+两条来路，做的都是"解一个 `tar.gz` 装进 `plugins/<id>/`"，区别只在包从哪来。
 
 | 来路 | 入口 | 包从哪来 | 记的 `origin` |
 |---|---|---|---|
 | **插件库** | 「插件」栏的「插件库」页 | 插件仓库的清单与包 | `library` |
 | **手动安装** | 「插件」栏的「管理」页 | 本地上传的 `.tar.gz` | `manual` |
 
-- **清单**：插件仓库根目录一个 `index.json`（`schema: 1`），逐条给出 `type` / `id` / `name` /
-  `author` / `version` / `description` / `domain` / `hasWebui` / `depends` / `bytes` / `md5` / `path`。
-  `path` 形如 `packages/<类型>/<id>/<id>-<版本>.tar.gz`。面板拉它是为了**列出来供挑**；
+- **清单**：插件仓库根目录一个 `index.json`（`schema: 2`），逐条给出 `types` / `id` / `name` /
+  `author` / `version` / `description` / `domain` / `hasWebui` / `depends` / `bytes` / `md5` / `path`
+  （`schema: 1` 的旧清单逐条只有一个 `type`，面板归一化成 `types:[type]`，照常可用）。
+  每条 `path` 形如 `packages/<id>/<id>-<版本>.tar.gz`（**源码与产物都按 id 平铺，不按类型分目录**）。面板拉它是为了**列出来供挑**；
   **拉不到就如实报错**（页面把原因写出来），不静默回退到内置列表。
 - **列表**：`GET /api/plugins/library`（带 `?refresh=1` 绕过 60 秒缓存重拉清单）。
   每条会标出 `installed` / `installedVersion` / `installedOrigin` / `hasUpdate` / `sourceUrl`。
 - **安装**：`POST /api/plugins/library/install`，body `{ type, id, version?, enable? }` ——
   按清单里的 `path` 取包，走**同一套两道校验**装进数据目录；`enable` 为真则装完就启用。
 - **包怎么来的**：由本仓库的 `tools/plugin-pack.js` 产出 ——
-  它把 `plugins/<类型>/<id>/` 打成一个 `tar.gz`，**顺手把 `files`（逐文件 md5）注入包里的 `plugin.json`**
+  它把 `plugins/<id>/` 打成一个 `tar.gz`，**顺手把 `files`（逐文件 md5）注入包里的 `plugin.json`**
   （手写的清单里没人声明 `files`，第二道校验原先形同虚设），随后写出 `index.json`。
   ⇒ 插件源码留在本仓库本地（`plugins/` 不进版本库），版本库里只收**产物**。
 
@@ -99,7 +105,7 @@
 除了插件库，插件还能**自己声明去哪查新版** —— 和 Magisk 模块在模块里写更新地址同一个路子：
 
 1. 插件在 `plugin.json` 写 `updateUrl`，指向一个自己的小清单（http(s)）。本仓库插件默认指向
-   `packages/<类型>/<id>/update.json`，`plugin-pack.js` 打包时**自动生成**这个文件（与包同目录）。
+   `packages/<id>/update.json`，`plugin-pack.js` 打包时**自动生成**这个文件（与包同目录）。
 2. 清单形状：
 
    ```json
@@ -156,8 +162,21 @@
   不写成 `/config`、`/search` 这类路径样式 —— 免得后来者以为还要发 HTTP。
 - 插件**内部**要不要给自己的实例开端口，是插件自己的事；面板不参与分配、也不依赖它。
 - 插件入口的形状：`module.exports = { actions: { 动作名: async (args, ctx) => 返回值 } }`。
-  `ctx` 给四样东西：`type` / `id`（自己是谁）、`dataDir`（自己的数据目录）、`log(...)`（写进面板日志）、
+  多类型包把动作**按角色分组**：`actions: { home: { rows, run, http }, metadata: { … } }`
+  —— 同一个 `actions` 对象要么全扁平（单类型包）、要么全分组；宿主按消息里的 `role` 进对应分组，
+  没带 role 再回退扁平表。多类型包的推荐写法是薄入口 + `roles/<类型>/` 各导出一份 `actions`：
+
+  ```js
+  module.exports = { actions: {
+    home: require('./roles/home').actions,
+    metadata: require('./roles/metadata').actions,
+  } };
+  ```
+
+  `ctx` 给这些：`types`（自己的全部类型）/ `type`（代表类型，兼容旧代码）/ `id`（自己是谁）、
+  `dataDir`（自己的数据目录）、`log(...)`（写进面板日志）、
   `hostCall(target, action, args)`（**反向调用宿主**，白名单制，见下）。
+  进程环境变量同理：`MBP_PLUGIN_TYPES`（逗号分隔）为主，旧的单个 `MBP_PLUGIN_TYPE` 继续给。
   面板**只做**"把请求转成动作、把返回值转回去"，不做别的（加载与分发由宿主的 `runner.js` 负责）。
 - 调试口径：面板把**每次请求与回复写进日志**（沿用现有源"留子进程尾部日志"的做法）。
 
@@ -565,7 +584,7 @@ OpenWrt 的 LuCI 插件（`luci-app-*`）是同类做法，可借鉴（来源：
 
 | 现在 | 之后 |
 |---|---|
-| 源的包在 `sources/`、清单在 `sources.json` | `plugins/<类型>/<id>/`，多类型统一 |
+| 源的包在 `sources/`、清单在 `sources.json` | `plugins/<id>/`，一个 id 一个目录（多类型统一） |
 | 源跑在子进程、监听端口，面板用 HTTP 打它 | 插件跑在子进程，面板走**管道**、用**动作名**调用 |
 | 猫源协议写死在面板（`core/catpaw.js` + agg 里几处 URL 拼接） | 收进**源插件**；面板只做"编辑参数 + 打分过滤" |
 | 某个上游的元数据写死在面板（面板里带它的域常量与图片基地址） | 收进**元数据插件**；面板按域分派 |
@@ -573,4 +592,4 @@ OpenWrt 的 LuCI 插件（`luci-app-*`）是同类做法，可借鉴（来源：
 | 详情快照（小时级，判据"全站都通"） | **线路结果缓存**（按天默认 1 天，判据"有线路就存"） |
 | 每个运行中的源各有一个「配置中心」子页 | 收进**插件设置页**内部 |
 | 客户端拿到的播放地址由面板解析坐标后 302 | 面板把 `ref` 转给插件、插件回地址，面板仍只 302 |
-| 源包在 `sources/`，逐个文件下载 + 一道 md5 | 插件包在 `plugins/<类型>/<id>/`，`tar.gz` + 两道 md5，装/卸/启停都走管理页 |
+| 源包在 `sources/`，逐个文件下载 + 一道 md5 | 插件包在 `plugins/<id>/`，`tar.gz` + 两道 md5，装/卸/启停都走管理页 |

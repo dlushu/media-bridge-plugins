@@ -1,132 +1,101 @@
 {
-  "schema": 1,
-  "generatedAt": "2026-10-03T12:04:43.011Z",
+  "schema": 2,
+  "generatedAt": "2026-10-03T17:28:01.664Z",
   "plugins": [
     {
-      "type": "home",
-      "id": "example",
-      "name": "首页示例（TMDB）",
-      "author": "media-bridge",
-      "version": "1.0.4",
-      "description": "首页示例：11 行 TMDB 榜单、趋势与分类浏览",
-      "domain": "",
-      "hasWebui": true,
-      "depends": [],
-      "bytes": 26084,
-      "md5": "d2fdbf311711ceb7496b8cf97a272ce0",
-      "path": "packages/home/example/example-1.0.4.tar.gz"
-    },
-    {
-      "type": "home",
+      "types": [
+        "home",
+        "metadata",
+        "source"
+      ],
       "id": "missav",
-      "name": "MissAV 首页",
+      "name": "MissAV",
       "author": "media-bridge",
-      "version": "1.0.4",
-      "description": "MissAV 首页：热门、新作、中文字幕与分类浏览",
-      "domain": "",
-      "hasWebui": true,
-      "depends": [],
-      "bytes": 21915,
-      "md5": "95653a5018682c3efd20940a8c3dd269",
-      "path": "packages/home/missav/missav-1.0.4.tar.gz"
-    },
-    {
-      "type": "metadata",
-      "id": "missav",
-      "name": "MissAV 元数据",
-      "author": "media-bridge",
-      "version": "1.0.4",
-      "description": "MissAV 元数据：影片信息与搜索",
+      "version": "1.1.0",
+      "description": "MissAV 三合一：首页推荐、影片元数据、播放源",
       "domain": "missav",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24484,
-      "md5": "ea0bfff7034294a38c4bf294e2a9aacf",
-      "path": "packages/metadata/missav/missav-1.0.4.tar.gz"
+      "bytes": 68192,
+      "md5": "9cf1d69a43afc48143af393760a12cd9",
+      "path": "packages/missav/missav-1.1.0.tar.gz"
     },
     {
-      "type": "metadata",
+      "types": [
+        "metadata",
+        "home"
+      ],
       "id": "tmdb",
       "name": "TMDB",
       "author": "media-bridge",
-      "version": "1.0.4",
-      "description": "TMDB 元数据：影片信息、分集与搜索",
+      "version": "1.1.0",
+      "description": "TMDB 二合一：影片元数据与 TMDB 首页示例",
       "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24703,
-      "md5": "dbcc64009c5194966f81a8d20b4f0e0b",
-      "path": "packages/metadata/tmdb/tmdb-1.0.4.tar.gz"
+      "bytes": 49945,
+      "md5": "8d98795df5c01a7f43b0b458a638b5ba",
+      "path": "packages/tmdb/tmdb-1.1.0.tar.gz"
     },
     {
-      "type": "output",
+      "types": [
+        "output"
+      ],
       "id": "fwrex",
-      "name": "FW/Rex Widgets 输出",
+      "name": "媒体播放器Widgets",
       "author": "media-bridge",
-      "version": "1.0.20",
-      "description": "把面板聚合播放输出成 FW/Rex Widgets 模块，供外部播放器调用",
-      "domain": "",
+      "version": "1.0.25",
+      "description": "把面板聚合播放输出成媒体播放器组件，供 FW/Rex 与 CapyPlayer 调用",
       "hasWebui": true,
       "depends": [],
-      "bytes": 20222,
-      "md5": "60ea7231d629b2df056d55e70fc82f77",
-      "path": "packages/output/fwrex/fwrex-1.0.20.tar.gz"
+      "bytes": 23878,
+      "md5": "26aa6cd2e27641dbd749d53b3cb9e0a6",
+      "path": "packages/fwrex/fwrex-1.0.25.tar.gz"
     },
     {
-      "type": "source",
+      "types": [
+        "source"
+      ],
       "id": "catpaw",
       "name": "猫爪源",
       "author": "media-bridge",
       "version": "1.0.5",
       "description": "猫爪源自托管：站点清单、候选、播放解析与测速",
-      "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 51215,
-      "md5": "840a2eebcd97c090678fc73eaf30bb20",
-      "path": "packages/source/catpaw/catpaw-1.0.5.tar.gz"
+      "bytes": 51205,
+      "md5": "bbefab29ead5c3a0fe124359d43c26d5",
+      "path": "packages/catpaw/catpaw-1.0.5.tar.gz"
     },
     {
-      "type": "source",
+      "types": [
+        "source"
+      ],
       "id": "catpaw-resolve",
       "name": "猫爪源自解析版",
       "author": "media-bridge",
       "version": "1.0.7",
       "description": "猫爪源自托管，分享链由插件本地解析（夸克 / UC / 115 等十一家网盘）",
-      "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 183427,
-      "md5": "9bbb272c4ba75d6a17203296000011e5",
-      "path": "packages/source/catpaw-resolve/catpaw-resolve-1.0.7.tar.gz"
+      "bytes": 183429,
+      "md5": "10abbf8e77b50e9d0d6fac9ff4f19a20",
+      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.7.tar.gz"
     },
     {
-      "type": "source",
-      "id": "missav",
-      "name": "MissAV 片源",
-      "author": "media-bridge",
-      "version": "1.0.4",
-      "description": "MissAV 片源：站内搜索与影片页 m3u8 解析",
-      "domain": "",
-      "hasWebui": true,
-      "depends": [],
-      "bytes": 23766,
-      "md5": "bf786a1719bd2aa0d73274c0b0dfec07",
-      "path": "packages/source/missav/missav-1.0.4.tar.gz"
-    },
-    {
-      "type": "source",
+      "types": [
+        "source"
+      ],
       "id": "pikpak",
       "name": "PikPak 磁力片源",
       "author": "media-bridge",
       "version": "1.0.11",
       "description": "磁力搜索 → PikPak 离线下载 → 播放直链",
-      "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 61709,
-      "md5": "b64cb18a39ad2cc2d3b3b6c52885a950",
-      "path": "packages/source/pikpak/pikpak-1.0.11.tar.gz"
+      "bytes": 61702,
+      "md5": "a2a2479dea6e741972910ae542607c2d",
+      "path": "packages/pikpak/pikpak-1.0.11.tar.gz"
     }
   ]
 }

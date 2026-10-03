@@ -13,7 +13,7 @@
  * 包（目录形式，打出来是一个 tar.gz）：
  *   plugin.json     声明（本文件校验的对象）
  *   index.js        main（默认 index.js）
- *   ui/             可选：插件自己的 webui 静态文件
+ *   角色子目录       多类型包把各类型代码分在子目录里（见 docs/adr/0046）
  *   data/           插件自己的数据 —— **由面板在安装时创建，包里不该有**
  *   *.md            文档（源码目录里写给自己的笔记）—— **不随包发行**
  */
@@ -77,20 +77,55 @@ function readManifest(dir) {
   if (!name) throw fail('缺少 name（显示名）');
   const version = String(raw.version || '').trim();
   if (!version) throw fail('缺少 version');
-  const type = String(raw.type || '').trim();
-  if (!TYPES.includes(type)) throw fail(`type 必须是 ${TYPES.join(' / ')}，实际是「${type || '(空)'}」`);
+
+  /* types：新写法数组（多类型，见 docs/adr/0046）；旧写法单值 type 仍收。 */
+  let types;
+  if (Array.isArray(raw.types)) {
+    types = raw.types.map((t) => String(t || '').trim());
+  } else if (raw.type !== undefined && raw.type !== null) {
+    types = [String(raw.type || '').trim()];
+  } else {
+    throw fail(`缺少 types（${TYPES.join(' / ')} 的数组；旧版单值 type 也仍接受）`);
+  }
+  if (!types.length || types.some((t) => !t)) throw fail('types 不能为空');
+  for (const t of types) {
+    if (!TYPES.includes(t)) throw fail(`types 里有不认识的类型：「${t}」（只认 ${TYPES.join(' / ')}）`);
+  }
+  if (new Set(types).size !== types.length) throw fail(`types 有重复：${types.join(' / ')}`);
+  const type = types[0]; // 兼容仍读 m.type 的调用点；没有"主类型"语义
+
   const main = String(raw.main || 'index.js').trim();
   if (!fs.existsSync(path.join(dir, main))) throw fail(`入口文件不存在：${main}`);
 
   let domain = '';
-  if (type === 'metadata') {
+  if (types.includes('metadata')) {
     domain = String(raw.domain || '').trim();
     if (!/^[a-z][a-z0-9]*$/i.test(domain)) {
-      throw fail(`元数据插件必须声明 domain（域 id，就是条目 Id 的前缀）：「${domain || '(空)'}」不合法`);
+      throw fail(`types 含 metadata 时必须声明 domain（域 id，就是条目 Id 的前缀）：「${domain || '(空)'}」不合法`);
     }
   }
-  const webui = String(raw.webui || '').trim();
-  if (webui && !fs.existsSync(path.join(dir, webui))) throw fail(`webui 入口不存在：${webui}`);
+
+  /* webui：单类型包给字符串或对象都行；多类型包必须给 {类型:入口} 的对象。
+   * 统一归一化成 {类型:相对路径}（与面板 contract.js 同口径）。 */
+  const webui = {};
+  if (raw.webui !== undefined && raw.webui !== null && raw.webui !== '') {
+    if (typeof raw.webui === 'string') {
+      if (types.length > 1) throw fail('多类型插件的 webui 必须是 {类型:入口文件} 的对象，不接受单个字符串');
+      const rel = raw.webui.trim();
+      if (!fs.existsSync(path.join(dir, rel))) throw fail(`webui 入口不存在：${rel}`);
+      webui[types[0]] = rel;
+    } else if (raw.webui && typeof raw.webui === 'object' && !Array.isArray(raw.webui)) {
+      for (const [role, rel0] of Object.entries(raw.webui)) {
+        if (!types.includes(role)) throw fail(`webui 的 key「${role}」不在 types 里（${types.join(' / ')}）`);
+        const rel = String(rel0 || '').trim();
+        if (!rel) throw fail(`webui.${role} 入口为空`);
+        if (!fs.existsSync(path.join(dir, rel))) throw fail(`webui.${role} 入口不存在：${rel}`);
+        webui[role] = rel;
+      }
+    } else {
+      throw fail('webui 必须是字符串（单类型包）或 {类型:入口文件} 对象');
+    }
+  }
 
   /* 自更新清单地址（可选；与面板 contract.js 同口径）：只收 http(s)，
    * 面板装包后会主动 GET 它，不能让 file:// 之类从清单里混进来。 */
@@ -114,9 +149,12 @@ function readManifest(dir) {
     name,
     author: String(raw.author || '').trim(),
     version,
-    type,
+    types,
+    type, // = types[0]，兼容旧调用点
     main,
     domain,
+    series: raw.series !== false,
+    /** 归一化后的 webui：`{类型:入口相对路径}`（没有就是 `{}`） */
     webui,
     updateUrl,
     depends: Array.isArray(raw.depends) ? raw.depends.map((x) => String(x)) : [],

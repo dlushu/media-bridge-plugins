@@ -9,37 +9,48 @@
 ## 这里有什么
 
 ```
-plugins/<类型>/<id>/                      插件源码（本地开发用；不进仓库）
+plugins/<id>/                             插件源码（本地开发用；不进仓库；可多类型，角色放 roles/<类型>/）
 tools/plugin-pack.js                      打包脚本
 tools/contract.js                         打包侧的契约校验（面板 server/modules/plugin/contract.js 的子集）
 docs/                                     插件文档（契约 / 架构讨论存档 / 施工批次计划 / 首页插件规范）
 docs/notes/                               过程记录（当时的计划与迁移留档）
-packages/<类型>/<id>/<id>-<版本>.tar.gz     打好的插件包
+packages/<id>/<id>-<版本>.tar.gz            插件包（一个 id 一个目录，不按类型分目录）
 index.json                                插件清单（面板「插件库」页拉的就是它）
 ```
 
-`index.json` 的形状（`schema: 1`）：
+`index.json` 的形状（`schema: 2`）：
 
 ```json
 {
-  "schema": 1,
+  "schema": 2,
   "generatedAt": "…",
   "plugins": [
     {
-      "type": "metadata",
+      "types": ["metadata", "home"],
       "id": "<插件 id>",
       "name": "<显示名>",
       "author": "<作者署名>",
-      "version": "1.0.0",
-      "description": "元数据域 <域 id>：按条目坐标取元数据与一季分集、按名字搜索",
+      "version": "1.1.0",
+      "description": "…",
       "domain": "<域 id>",
       "hasWebui": true,
       "depends": [],
       "bytes": "<包文件的字节数>",
       "md5": "<包文件的 md5>",
-      "path": "packages/metadata/<插件 id>/<插件 id>-1.0.0.tar.gz"
+      "path": "packages/<插件 id>/<插件 id>-1.1.0.tar.gz"
     }
   ]
+}
+```
+
+多类型包（`types` 多于一个）的 `plugin.json` 还要写**按类型映射的 webui 入口**，
+入口动作按角色分组（详见 `docs/plugin-contract.md` 第二、四节与面板 ADR-0046）：
+
+```json
+{
+  "id": "missav",
+  "types": ["home", "metadata", "source"],
+  "webui": { "home": "roles/home/ui/index.html", "metadata": "roles/metadata/ui/index.html", "source": "roles/source/ui/index.html" }
 }
 ```
 
@@ -49,8 +60,8 @@ index.json                                插件清单（面板「插件库」�
 ## 打一个插件
 
 ```bash
-node tools/plugin-pack.js <类型>/<id>                    # 打一个
-node tools/plugin-pack.js <类型>/<id> <类型>/<id> …       # 打指定的几个
+node tools/plugin-pack.js catpaw                         # 打一个（按插件 id）
+node tools/plugin-pack.js catpaw pikpak                  # 打指定的几个
 node tools/plugin-pack.js --all                          # 全量重建
 ```
 
@@ -59,16 +70,16 @@ node tools/plugin-pack.js --all                          # 全量重建
 - **一次只打指定的那些**：改了一个插件就只重打它，慢的是"每次全量重打"，其余包的 md5 也无谓地变。
 - **`index.json` 按 `packages/` 里现有的包当场重算**（逐个解出包里的 `plugin.json` 取字段、再算包文件的
   md5 与字节数）—— 清单不会与包脱节，增量打包时其余条目也是现算的，不会读到旧数字。
-- 打 `<类型>/<id>` 之前会先删掉它目录下的旧包 —— 升版本后不会新旧两个包并存于清单里。
+- 打 `<id>` 之前会先删掉 `packages/<id>/` 整个目录 —— 升版本后不会新旧两个包并存于清单里。
 - `--all` 会先清空 `packages/` 与 `index.json` 再全量重打（**唯一会丢东西的模式**，也是"要一份干净产物"时的入口）。
 - 源码目录连契约都过不了会当场报错、不打包（面板装了也会拒），所以打包本身是一道前置校验。
 
 改插件的闭环：
 
 ```bash
-# 1) 改 plugins/<类型>/<id>/ 下的源码
+# 1) 改 plugins/<id>/ 下的源码
 # 2) 重打那一个包
-node tools/plugin-pack.js <类型>/<id>
+node tools/plugin-pack.js <id>
 # 3) 在面板里更新：把新包推上本仓库后在「插件 → 插件库」点更新，或直接在「插件 → 管理」上传这个 .tar.gz
 ```
 

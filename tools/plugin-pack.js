@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 'use strict';
 /**
- * 打包插件：把本仓库 `plugins/<类型>/<id>/` 打成插件包，并重算 `index.json`。
+ * 打包插件：把本仓库 `plugins/<id>/` 打成插件包，并重算 `index.json`。
+ *
+ * **源码与产物都按 id 平铺，不按类型分目录** —— 包身份只看 `plugin.json` 的 id，
+ * 类型（可多个）写在声明里，不体现在路径上。
  *
  * 用法（`--out` 省略时就是**当前目录**，在仓库根直接跑即可）：
  *
- *   node tools/plugin-pack.js metadata/tmdb                打一个
- *   node tools/plugin-pack.js home/missav source/pikpak    打指定的几个
- *   node tools/plugin-pack.js --all                        全量重建
+ *   node tools/plugin-pack.js fwrex                 打一个（按插件 id）
+ *   node tools/plugin-pack.js catpaw pikpak         打指定的几个
+ *   node tools/plugin-pack.js --all                 全量重建
  *
  * 产物（写进 `--out`，**`.git` 一概不碰**）：
- *   index.json                                     清单（面板「插件库」拉的就是它）
- *   packages/<类型>/<id>/<id>-<版本>.tar.gz          包本体
- *   packages/<类型>/<id>/update.json                自更新清单（**仅插件声明了 updateUrl 时**生成）
+ *   index.json                          清单（面板「插件库」拉的就是它）
+ *   packages/<id>/<id>-<版本>.tar.gz      包本体
+ *   packages/<id>/update.json            自更新清单（**仅插件声明了 updateUrl 时**生成）
  *
  * **一次只打一个（或指定的几个）**：全量重建会把每个插件都重打一遍，
  * 改了一个插件时既慢，也让其余包的 md5 无谓地变。`--all` 留给"要一份干净的产物"时用。
@@ -22,8 +25,8 @@
  * 与字节数。所以增量打一个插件时，其余条目也是从包上现算的 —— 不会出现
  * "改了源码但清单还是旧数字"这种漂移，也不会因为漏更新某一条而对不上。
  *
- * ⚠️ **按 (类型, id) 清旧包**：打 `<类型>/<id>` 之前先删掉它目录下的旧 `*.tar.gz`，
- * 免得升版本后新旧两个包同时躺在 `packages/` 里、清单里出现两条同 id 的条目。
+ * ⚠️ **按 id 清旧包**：打 `<id>` 之前先删掉 `packages/<id>/` 整个目录，
+ * 免得升版本后新旧两个包同时躺在里面、清单里出现两条同 id 的条目。
  *
  * 为什么要"注入 files"：包内 `plugin.json` 的 `files` 是**第二道校验**（逐文件 md5），
  * 面板安装时按它对包里的每个文件核一遍（见 docs/plugin-contract.md 第二节）。
@@ -41,8 +44,9 @@ const contract = require('./contract');
 const ROOT = path.resolve(__dirname, '..');
 const SRC = path.join(ROOT, 'plugins');
 
-/** 清单结构版本（与面板 server/modules/plugin/library.js 的 SCHEMA 是同一个数） */
-const SCHEMA = 1;
+/** 清单结构版本（与面板 server/modules/plugin/library.js 的 SCHEMA 是同一个数）。
+ * v2：条目用 types 数组（多类型包，见 docs/adr/0046）。 */
+const SCHEMA = 2;
 
 const md5 = contract.md5;
 
@@ -69,35 +73,33 @@ function positionals() {
   return out;
 }
 
-/** 仓库里所有插件目录：`plugins/<类型>/<id>/`（有 plugin.json 才算） */
+/**
+ * 仓库里所有插件源码目录（有 plugin.json 才算）：**平铺** `plugins/<id>/`。
+ * 类型只由 plugin.json 的 `types` 说了算，路径里不带类型。
+ */
 function listSources() {
   const out = [];
   if (!fs.existsSync(SRC)) return out;
-  for (const t of fs.readdirSync(SRC, { withFileTypes: true })) {
-    if (!t.isDirectory() || !contract.TYPES.includes(t.name)) continue;
-    const typeDir = path.join(SRC, t.name);
-    for (const one of fs.readdirSync(typeDir, { withFileTypes: true })) {
-      if (!one.isDirectory()) continue;
-      const dir = path.join(typeDir, one.name);
-      if (!fs.existsSync(path.join(dir, 'plugin.json'))) continue;
-      out.push({ type: t.name, dirName: one.name, dir });
-    }
+  for (const one of fs.readdirSync(SRC, { withFileTypes: true })) {
+    if (!one.isDirectory() || one.name.startsWith('.')) continue;
+    const dir = path.join(SRC, one.name);
+    if (!fs.existsSync(path.join(dir, 'plugin.json'))) continue;
+    out.push({ spec: one.name, dirName: one.name, dir });
   }
   return out;
 }
 
-/** `metadata/tmdb` 这样的写法 → 源码目录（找不到就抛，并列出可用的） */
+/** `<id>` → 源码目录（找不到就抛，并列出可用的）。带 `前缀/` 也认，取最后一段当 id。 */
 function sourceOf(spec) {
-  const parts = String(spec).split('/').map((x) => x.trim()).filter(Boolean);
-  if (parts.length !== 2 || !contract.TYPES.includes(parts[0])) {
-    throw new Error(`插件写法应为 <类型>/<id>（类型是 ${contract.TYPES.join(' / ')}），实际是「${spec}」`);
+  const all = listSources();
+  const want = String(spec).split('/').map((x) => x.trim()).filter(Boolean).pop() || '';
+  const hit = all.find((x) => x.spec === want) || null;
+  if (!hit) {
+    throw new Error(
+      `没有这个插件：「${spec}」${all.length ? `\n  仓库里现有的：${all.map((x) => x.spec).join('  ')}` : ''}`
+    );
   }
-  const dir = path.join(SRC, parts[0], parts[1]);
-  if (!fs.existsSync(path.join(dir, 'plugin.json'))) {
-    const all = listSources().map((x) => `${x.type}/${x.dirName}`);
-    throw new Error(`没有这个插件：「${spec}」${all.length ? `\n  仓库里现有的：${all.join('  ')}` : ''}`);
-  }
-  return { type: parts[0], dirName: parts[1], dir };
+  return hit;
 }
 
 /**
@@ -124,9 +126,9 @@ function copyTree(from, to) {
  * 就不该被打出来（更不该进清单 —— 面板装了也会当场拒绝）。
  */
 function packOne(one, outRoot, tmpRoot) {
-  const m = contract.readManifest(one.dir); // 校验（id / name / version / type / main / webui / domain…）
+  const m = contract.readManifest(one.dir); // 校验（id / name / version / types / main / webui / domain…）
 
-  const stage = path.join(tmpRoot, `stage-${m.type}-${m.id}`);
+  const stage = path.join(tmpRoot, `stage-${m.id}`);
   fs.rmSync(stage, { recursive: true, force: true });
   copyTree(one.dir, stage);
 
@@ -141,14 +143,16 @@ function packOne(one, outRoot, tmpRoot) {
   declared.files = files;
   fs.writeFileSync(path.join(stage, 'plugin.json'), JSON.stringify(declared, null, 2) + '\n');
 
-  /* 按 (类型, id) 清旧包：升版本后不留着上一版（否则清单里会出现两条同 id 的条目）。
-   * update.json 也在同一个目录里，一并清掉后重写，避免指向已删除的旧包名。 */
-  const pkgDir = path.join(outRoot, 'packages', m.type, m.id);
+  /* 产物一律放 `packages/<id>/`（不按类型分目录；多类型包本来也这样）：
+   * 一个 id 一个目录，放着包本体与 update.json。升版本后不留着上一版，
+   * 否则清单里会出现两条同 id 的条目。 */
+  const pkgRelDir = path.join('packages', m.id);
+  const pkgDir = path.join(outRoot, pkgRelDir);
   fs.rmSync(pkgDir, { recursive: true, force: true });
   fs.mkdirSync(pkgDir, { recursive: true });
 
   const pkgName = `${m.id}-${m.version}.tar.gz`;
-  const rel = `packages/${m.type}/${m.id}/${pkgName}`;
+  const rel = `${pkgRelDir.split(path.sep).join('/')}/${pkgName}`;
   const target = path.join(outRoot, rel);
   /* `-C <stage> .` ⇒ 包内顶层就是包内容（不套一层插件目录名） */
   execFileSync('tar', ['-czf', target, '-C', stage, '.'], { stdio: 'pipe' });
@@ -168,14 +172,15 @@ function packOne(one, outRoot, tmpRoot) {
   }
 
   return {
-    type: m.type,
+    types: m.types,
+    type: m.type, // = types[0]，兼容仍读单值的地方
     id: m.id,
     name: m.name,
     author: m.author,
     version: m.version,
     description: m.description,
     domain: m.domain,
-    hasWebui: !!m.webui,
+    hasWebui: Object.keys(m.webui || {}).length > 0,
     depends: m.depends,
     bytes: buf.length,
     md5: md5(buf),
@@ -214,14 +219,15 @@ function entryOfPackage(file, outRoot, tmpRoot) {
   const buf = fs.readFileSync(file);
   fs.rmSync(stage, { recursive: true, force: true });
   return {
-    type: m.type,
+    types: m.types,
+    type: m.type, // = types[0]
     id: m.id,
     name: m.name,
     author: m.author,
     version: m.version,
     description: m.description,
     domain: m.domain,
-    hasWebui: !!m.webui,
+    hasWebui: Object.keys(m.webui || {}).length > 0,
     depends: m.depends,
     bytes: buf.length,
     md5: md5(buf),
@@ -231,9 +237,21 @@ function entryOfPackage(file, outRoot, tmpRoot) {
 
 /** 重算并写回 index.json：**以 `packages/` 里现有的包为准** */
 function rebuildIndex(outRoot, tmpRoot) {
+  const seen = new Map();
   const plugins = collectPackages(outRoot).map((f) => entryOfPackage(f, outRoot, tmpRoot));
-  plugins.sort((a, b) => (a.type === b.type ? a.id.localeCompare(b.id) : a.type.localeCompare(b.type)));
-  const index = { schema: SCHEMA, generatedAt: new Date().toISOString(), plugins };
+  /* 同 id 多包在 v2 是不允许的（一个 id 只能有一条）：增量删旧没删干净时当场点名 */
+  for (const e of plugins) {
+    if (seen.has(e.id)) throw new Error(`packages/ 里存在两个 id=${e.id} 的包（${seen.get(e.id)} 与 ${e.path}），先删掉旧的`);
+    seen.set(e.id, e.path);
+  }
+  plugins.sort((a, b) => (a.types[0] === b.types[0] ? a.id.localeCompare(b.id) : a.types[0].localeCompare(b.types[0])));
+  /* 清单条目只发契约字段（types 数组，不发兼容用的单值 type） */
+  const clean = plugins.map(({ types, id, name, author, version, description, domain, hasWebui, depends, bytes, md5, path: p }) => {
+    const row = { types, id, name, author, version, description, domain: domain || undefined, hasWebui, depends, bytes, md5, path: p };
+    for (const k of Object.keys(row)) if (row[k] === undefined) delete row[k];
+    return row;
+  });
+  const index = { schema: SCHEMA, generatedAt: new Date().toISOString(), plugins: clean };
   fs.writeFileSync(path.join(outRoot, 'index.json'), JSON.stringify(index, null, 2) + '\n');
   return plugins;
 }
@@ -247,7 +265,7 @@ function main() {
 
   if (!all && !specs.length) {
     console.error(
-      '用法：node tools/plugin-pack.js <类型>/<id> [更多…] [--out <目录>]\n' +
+      '用法：node tools/plugin-pack.js <id> [更多…] [--out <目录>]\n' +
         '      node tools/plugin-pack.js --all [--out <目录>]\n' +
         '（--out 省略 = 当前目录）'
     );
@@ -263,7 +281,7 @@ function main() {
       fs.rmSync(path.join(outRoot, 'packages'), { recursive: true, force: true });
       fs.rmSync(path.join(outRoot, 'index.json'), { force: true });
       sources = listSources();
-      if (!sources.length) throw new Error(`没有找到任何插件：${path.relative(ROOT, SRC)}/<类型>/<id>/plugin.json`);
+      if (!sources.length) throw new Error(`没有找到任何插件：${path.relative(ROOT, SRC)}/<id>/plugin.json`);
     } else {
       sources = specs.map(sourceOf);
     }
@@ -281,9 +299,9 @@ function main() {
 
     console.log(`\n插件仓库产物 → ${outRoot}\n`);
     for (const e of entries) {
-      if (e._dirName !== e.id) console.log(`  ⚠ 目录名与 plugin.json 的 id 不一致：${e.type}/${e._dirName} → ${e.id}`);
+      if (e._dirName !== e.id) console.log(`  ⚠ 目录名与 plugin.json 的 id 不一致：…/${e._dirName} → ${e.id}`);
       console.log(
-        `  ${e.type.padEnd(9)} ${e.id.padEnd(10)} v${String(e.version).padEnd(8)} ${String(e._files).padStart(3)} 文件  ` +
+        `  ${e.types.join('/').padEnd(20)} ${e.id.padEnd(10)} v${String(e.version).padEnd(8)} ${String(e._files).padStart(3)} 文件  ` +
           `${String(e.bytes).padStart(8)}B  md5 ${e.md5.slice(0, 8)}…`
       );
     }

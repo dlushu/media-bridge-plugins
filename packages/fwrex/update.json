@@ -1,6 +1,6 @@
 {
-  "version": "1.0.25",
-  "url": "fwrex-1.0.25.tar.gz",
-  "md5": "26aa6cd2e27641dbd749d53b3cb9e0a6",
-  "changelog": "修 CapyPlayer 无法触发：capy 版保留 loadResource（stream）模块作为 Emby 条目详情页的解析入口，并把返回映射成 capy 标准多线路（唯一 id + videoUrl + customHeaders，修多版本只剩一个/播不了）；新增 CapyPlayer 组件输出（同一端点按 client 分支）；插件更名「媒体播放器Widgets」"
+  "version": "1.0.26",
+  "url": "fwrex-1.0.26.tar.gz",
+  "md5": "7eea2aa25469e2b4906aeb2e3d29a3d3",
+  "changelog": "生成组件的标题与描述改叫「媒体桥」（原本叫「媒体播放器Widgets」，客户端里显示成「媒体播放器Widgets · 首页示例（TMDB）」这类）；插件在面板里的名字不变"
 }

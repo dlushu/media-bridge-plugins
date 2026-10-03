@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-03T17:28:01.664Z",
+  "generatedAt": "2026-10-03T18:20:01.390Z",
   "plugins": [
     {
       "types": [
@@ -44,13 +44,13 @@
       "id": "fwrex",
       "name": "媒体播放器Widgets",
       "author": "media-bridge",
-      "version": "1.0.25",
+      "version": "1.0.26",
       "description": "把面板聚合播放输出成媒体播放器组件，供 FW/Rex 与 CapyPlayer 调用",
       "hasWebui": true,
       "depends": [],
-      "bytes": 23878,
-      "md5": "26aa6cd2e27641dbd749d53b3cb9e0a6",
-      "path": "packages/fwrex/fwrex-1.0.25.tar.gz"
+      "bytes": 23809,
+      "md5": "7eea2aa25469e2b4906aeb2e3d29a3d3",
+      "path": "packages/fwrex/fwrex-1.0.26.tar.gz"
     },
     {
       "types": [

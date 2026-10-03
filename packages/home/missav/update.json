@@ -1,5 +1,6 @@
 {
-  "version": "1.0.3",
-  "url": "missav-1.0.3.tar.gz",
-  "md5": "0a54fd5a46b9b272825f9e616821fc31"
+  "version": "1.0.4",
+  "url": "missav-1.0.4.tar.gz",
+  "md5": "3088a74061aeeb0dae8208d858b3ee2b",
+  "changelog": "设置页改用面板统一样式"
 }

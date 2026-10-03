@@ -1,5 +1,6 @@
 {
-  "version": "1.0.18",
-  "url": "fwrex-1.0.18.tar.gz",
-  "md5": "29baaa134d7fa646f77b6090718f8783"
+  "version": "1.0.19",
+  "url": "fwrex-1.0.19.tar.gz",
+  "md5": "c602347b913aa7fa0b5805907aedb543",
+  "changelog": "设置页改用面板统一样式"
 }

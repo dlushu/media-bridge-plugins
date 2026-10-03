@@ -1,5 +1,6 @@
 {
-  "version": "1.0.3",
-  "url": "example-1.0.3.tar.gz",
-  "md5": "1471356980060040e4331a299561c9e7"
+  "version": "1.0.4",
+  "url": "example-1.0.4.tar.gz",
+  "md5": "76e6f0fc7932019ddf40f4ac9aa713f6",
+  "changelog": "设置页改用面板统一样式"
 }

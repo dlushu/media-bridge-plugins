@@ -1,76 +1,76 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-03T07:27:45.781Z",
+  "generatedAt": "2026-10-03T08:03:25.265Z",
   "plugins": [
     {
       "type": "home",
       "id": "example",
       "name": "首页示例（TMDB）",
       "author": "media-bridge",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "description": "首页示例：11 行 TMDB 榜单、趋势与分类浏览",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 26985,
-      "md5": "1471356980060040e4331a299561c9e7",
-      "path": "packages/home/example/example-1.0.3.tar.gz"
+      "bytes": 26089,
+      "md5": "76e6f0fc7932019ddf40f4ac9aa713f6",
+      "path": "packages/home/example/example-1.0.4.tar.gz"
     },
     {
       "type": "home",
       "id": "missav",
       "name": "MissAV 首页",
       "author": "media-bridge",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "description": "MissAV 首页：热门、新作、中文字幕与分类浏览",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 22738,
-      "md5": "0a54fd5a46b9b272825f9e616821fc31",
-      "path": "packages/home/missav/missav-1.0.3.tar.gz"
+      "bytes": 21902,
+      "md5": "3088a74061aeeb0dae8208d858b3ee2b",
+      "path": "packages/home/missav/missav-1.0.4.tar.gz"
     },
     {
       "type": "metadata",
       "id": "missav",
       "name": "MissAV 元数据",
       "author": "media-bridge",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "description": "MissAV 元数据：影片信息与搜索",
       "domain": "missav",
       "hasWebui": true,
       "depends": [],
-      "bytes": 25417,
-      "md5": "2f734787540928059648e4db419a029a",
-      "path": "packages/metadata/missav/missav-1.0.3.tar.gz"
+      "bytes": 24483,
+      "md5": "862e4f713b45b49f2d1003241a79972d",
+      "path": "packages/metadata/missav/missav-1.0.4.tar.gz"
     },
     {
       "type": "metadata",
       "id": "tmdb",
       "name": "TMDB",
       "author": "media-bridge",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "description": "TMDB 元数据：影片信息、分集与搜索",
       "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 25733,
-      "md5": "19a68812c5d0fcb81bb6af4f5675cc5e",
-      "path": "packages/metadata/tmdb/tmdb-1.0.3.tar.gz"
+      "bytes": 24726,
+      "md5": "9f35072cc62c90fe92f62d0ec94c6eba",
+      "path": "packages/metadata/tmdb/tmdb-1.0.4.tar.gz"
     },
     {
       "type": "output",
       "id": "fwrex",
       "name": "FW/Rex Widgets 输出",
       "author": "media-bridge",
-      "version": "1.0.18",
+      "version": "1.0.19",
       "description": "把面板聚合播放输出成 FW/Rex Widgets 模块，供外部播放器调用",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 23365,
-      "md5": "29baaa134d7fa646f77b6090718f8783",
-      "path": "packages/output/fwrex/fwrex-1.0.18.tar.gz"
+      "bytes": 21997,
+      "md5": "c602347b913aa7fa0b5805907aedb543",
+      "path": "packages/output/fwrex/fwrex-1.0.19.tar.gz"
     },
     {
       "type": "source",
@@ -105,28 +105,28 @@
       "id": "missav",
       "name": "MissAV 片源",
       "author": "media-bridge",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "description": "MissAV 片源：站内搜索与影片页 m3u8 解析",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24599,
-      "md5": "8115f9c29195f02f9b88e80db6e409c0",
-      "path": "packages/source/missav/missav-1.0.3.tar.gz"
+      "bytes": 23768,
+      "md5": "4dc5ce3d855b23a889fb6b91808cb01a",
+      "path": "packages/source/missav/missav-1.0.4.tar.gz"
     },
     {
       "type": "source",
       "id": "pikpak",
       "name": "PikPak 磁力片源",
       "author": "media-bridge",
-      "version": "1.0.10",
+      "version": "1.0.11",
       "description": "磁力搜索 → PikPak 离线下载 → 播放直链",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 63607,
-      "md5": "627dd12ac7b3b9766dfe698ee1b563f0",
-      "path": "packages/source/pikpak/pikpak-1.0.10.tar.gz"
+      "bytes": 61711,
+      "md5": "a15209e47f16534f183221fbefc63502",
+      "path": "packages/source/pikpak/pikpak-1.0.11.tar.gz"
     }
   ]
 }

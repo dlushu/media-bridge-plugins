@@ -1,5 +1,6 @@
 {
-  "version": "1.0.3",
-  "url": "tmdb-1.0.3.tar.gz",
-  "md5": "19a68812c5d0fcb81bb6af4f5675cc5e"
+  "version": "1.0.4",
+  "url": "tmdb-1.0.4.tar.gz",
+  "md5": "9f35072cc62c90fe92f62d0ec94c6eba",
+  "changelog": "设置页改用面板统一样式"
 }

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-03T08:03:25.265Z",
+  "generatedAt": "2026-10-03T12:04:43.011Z",
   "plugins": [
     {
       "type": "home",
@@ -12,8 +12,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 26089,
-      "md5": "76e6f0fc7932019ddf40f4ac9aa713f6",
+      "bytes": 26084,
+      "md5": "d2fdbf311711ceb7496b8cf97a272ce0",
       "path": "packages/home/example/example-1.0.4.tar.gz"
     },
     {
@@ -26,8 +26,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 21902,
-      "md5": "3088a74061aeeb0dae8208d858b3ee2b",
+      "bytes": 21915,
+      "md5": "95653a5018682c3efd20940a8c3dd269",
       "path": "packages/home/missav/missav-1.0.4.tar.gz"
     },
     {
@@ -40,8 +40,8 @@
       "domain": "missav",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24483,
-      "md5": "862e4f713b45b49f2d1003241a79972d",
+      "bytes": 24484,
+      "md5": "ea0bfff7034294a38c4bf294e2a9aacf",
       "path": "packages/metadata/missav/missav-1.0.4.tar.gz"
     },
     {
@@ -54,8 +54,8 @@
       "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24726,
-      "md5": "9f35072cc62c90fe92f62d0ec94c6eba",
+      "bytes": 24703,
+      "md5": "dbcc64009c5194966f81a8d20b4f0e0b",
       "path": "packages/metadata/tmdb/tmdb-1.0.4.tar.gz"
     },
     {
@@ -63,14 +63,14 @@
       "id": "fwrex",
       "name": "FW/Rex Widgets 输出",
       "author": "media-bridge",
-      "version": "1.0.19",
+      "version": "1.0.20",
       "description": "把面板聚合播放输出成 FW/Rex Widgets 模块，供外部播放器调用",
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 21997,
-      "md5": "c602347b913aa7fa0b5805907aedb543",
-      "path": "packages/output/fwrex/fwrex-1.0.19.tar.gz"
+      "bytes": 20222,
+      "md5": "60ea7231d629b2df056d55e70fc82f77",
+      "path": "packages/output/fwrex/fwrex-1.0.20.tar.gz"
     },
     {
       "type": "source",
@@ -82,8 +82,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 51230,
-      "md5": "0ed3f4bf901c26fed1f301df9dd9c556",
+      "bytes": 51215,
+      "md5": "840a2eebcd97c090678fc73eaf30bb20",
       "path": "packages/source/catpaw/catpaw-1.0.5.tar.gz"
     },
     {
@@ -96,8 +96,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 183425,
-      "md5": "9975a4e839e17bc08dc9abcc8918c09a",
+      "bytes": 183427,
+      "md5": "9bbb272c4ba75d6a17203296000011e5",
       "path": "packages/source/catpaw-resolve/catpaw-resolve-1.0.7.tar.gz"
     },
     {
@@ -110,8 +110,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 23768,
-      "md5": "4dc5ce3d855b23a889fb6b91808cb01a",
+      "bytes": 23766,
+      "md5": "bf786a1719bd2aa0d73274c0b0dfec07",
       "path": "packages/source/missav/missav-1.0.4.tar.gz"
     },
     {
@@ -124,8 +124,8 @@
       "domain": "",
       "hasWebui": true,
       "depends": [],
-      "bytes": 61711,
-      "md5": "a15209e47f16534f183221fbefc63502",
+      "bytes": 61709,
+      "md5": "b64cb18a39ad2cc2d3b3b6c52885a950",
       "path": "packages/source/pikpak/pikpak-1.0.11.tar.gz"
     }
   ]

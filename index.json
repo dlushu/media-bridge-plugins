@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-04T14:41:05.179Z",
+  "generatedAt": "2026-10-04T15:38:47.958Z",
   "plugins": [
     {
       "types": [
@@ -74,13 +74,13 @@
       "id": "catpaw-resolve",
       "name": "猫爪源自解析版",
       "author": "media-bridge",
-      "version": "1.0.7",
+      "version": "1.0.8",
       "description": "猫爪源自托管，分享链由插件本地解析（夸克 / UC / 115 等十一家网盘）",
       "hasWebui": true,
       "depends": [],
-      "bytes": 183442,
-      "md5": "7b6173a7415e823902693c841dc3c4ff",
-      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.7.tar.gz"
+      "bytes": 183436,
+      "md5": "d1c859252ffe5cd703503253a39ce936",
+      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.8.tar.gz"
     },
     {
       "types": [

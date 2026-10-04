@@ -1,6 +1,6 @@
 {
-  "version": "1.1.0",
-  "url": "tmdb-1.1.0.tar.gz",
-  "md5": "8d98795df5c01a7f43b0b458a638b5ba",
+  "version": "1.1.1",
+  "url": "tmdb-1.1.1.tar.gz",
+  "md5": "f89c22e1fd6cd1ede2491d36c56c4482",
   "changelog": "合并元数据包与首页示例包为多类型包（一进程、一份数据，连接设置两边共享）"
 }

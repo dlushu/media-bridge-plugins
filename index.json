@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-03T18:29:48.575Z",
+  "generatedAt": "2026-10-04T08:01:50.849Z",
   "plugins": [
     {
       "types": [
@@ -28,14 +28,14 @@
       "id": "tmdb",
       "name": "TMDB",
       "author": "media-bridge",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "description": "TMDB 二合一：影片元数据与 TMDB 首页示例",
       "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 49945,
-      "md5": "8d98795df5c01a7f43b0b458a638b5ba",
-      "path": "packages/tmdb/tmdb-1.1.0.tar.gz"
+      "bytes": 49933,
+      "md5": "f89c22e1fd6cd1ede2491d36c56c4482",
+      "path": "packages/tmdb/tmdb-1.1.1.tar.gz"
     },
     {
       "types": [

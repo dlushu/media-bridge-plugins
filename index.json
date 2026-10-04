@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-04T15:38:47.958Z",
+  "generatedAt": "2026-10-04T15:41:58.387Z",
   "plugins": [
     {
       "types": [
@@ -78,8 +78,8 @@
       "description": "猫爪源自托管，分享链由插件本地解析（夸克 / UC / 115 等十一家网盘）",
       "hasWebui": true,
       "depends": [],
-      "bytes": 183436,
-      "md5": "d1c859252ffe5cd703503253a39ce936",
+      "bytes": 183437,
+      "md5": "9e1b8645430f24b41b4cc572c38a2dee",
       "path": "packages/catpaw-resolve/catpaw-resolve-1.0.8.tar.gz"
     },
     {

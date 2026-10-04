@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-04T18:37:33.077Z",
+  "generatedAt": "2026-10-04T18:49:46.466Z",
   "plugins": [
     {
       "types": [
@@ -108,8 +108,8 @@
       "description": "小雅 Alist 搜索页 → 目录递归展开 → 阿里云盘直链",
       "hasWebui": true,
       "depends": [],
-      "bytes": 36516,
-      "md5": "4723730b99cf422c82681b766c793cff",
+      "bytes": 36631,
+      "md5": "53481303062979cc5288ad14cfc2ae3a",
       "path": "packages/xiaoya/xiaoya-1.0.0.tar.gz"
     }
   ]

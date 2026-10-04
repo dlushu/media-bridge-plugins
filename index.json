@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-04T17:25:00.482Z",
+  "generatedAt": "2026-10-04T17:33:30.219Z",
   "plugins": [
     {
       "types": [
@@ -74,13 +74,13 @@
       "id": "catpaw-resolve",
       "name": "猫爪源-网盘自解析版",
       "author": "media-bridge",
-      "version": "1.0.10",
+      "version": "1.0.11",
       "description": "猫爪源自托管，只解析源里面的网盘分享线路（夸克 / UC / 百度 / 阿里等十一家），普通线路原样透传",
       "hasWebui": true,
       "depends": [],
-      "bytes": 189418,
-      "md5": "faa495c9658c7ad5c15b3ecb67890f66",
-      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.10.tar.gz"
+      "bytes": 189596,
+      "md5": "1251d20b2706f92d54cd0eb7d07b65e2",
+      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.11.tar.gz"
     },
     {
       "types": [

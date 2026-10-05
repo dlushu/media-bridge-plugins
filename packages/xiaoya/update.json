@@ -1,6 +1,6 @@
 {
-  "version": "1.0.1",
-  "url": "xiaoya-1.0.1.tar.gz",
-  "md5": "74e4d4a1159928fec3865340056356d8",
-  "changelog": "定位修复：已写明 SxxEyy 的剧集不再走数字兜底，避免剧名里的数字被当成集号（小闲闲2.S02E01 请 S1E2 曾错配到 S02E01）"
+  "version": "1.0.2",
+  "url": "xiaoya-1.0.2.tar.gz",
+  "md5": "55e74e1e32b13b2ebdc38d3cc09eba8b",
+  "changelog": "聚合搜索补封面：抓 whatsnew 页建「路径/标题 → 豆瓣海报」索引（海报经小雅 /image 代理，避免豆瓣防盗链），候选与详情回填 vod_pic/pic；索引缓存 6 小时并与搜索并行，不拖慢首次搜索"
 }

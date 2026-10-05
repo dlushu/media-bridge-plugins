@@ -1,6 +1,6 @@
 {
-  "version": "1.1.1",
-  "url": "fwrex-1.1.1.tar.gz",
-  "md5": "36a15d55e9f383148b658e283bf22bdc",
+  "version": "1.1.2",
+  "url": "fwrex-1.1.2.tar.gz",
+  "md5": "fb744db06ecc1faa29630886e294c7c6",
   "changelog": "1.1：生成组件的标题与描述改叫「媒体桥」，FW/Rex 与 CapyPlayer 两个分支一起改；插件在面板里的名字保持「媒体播放器Widgets」不变。1.1.1：标题只留「媒体桥」，不再拼首页插件名等任何后缀"
 }

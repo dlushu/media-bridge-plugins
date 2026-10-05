@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-05T13:18:56.881Z",
+  "generatedAt": "2026-10-05T13:56:57.368Z",
   "plugins": [
     {
       "types": [
@@ -59,13 +59,13 @@
       "id": "catpaw",
       "name": "猫爪源",
       "author": "media-bridge",
-      "version": "1.0.7",
+      "version": "1.0.8",
       "description": "猫爪源自托管：站点清单、候选、播放解析与测速",
       "hasWebui": true,
       "depends": [],
-      "bytes": 51147,
-      "md5": "ab01b660367cdd96527d806452d61757",
-      "path": "packages/catpaw/catpaw-1.0.7.tar.gz"
+      "bytes": 51345,
+      "md5": "c69383a9238467e064d786c0a76d3187",
+      "path": "packages/catpaw/catpaw-1.0.8.tar.gz"
     },
     {
       "types": [
@@ -104,13 +104,13 @@
       "id": "xiaoya",
       "name": "小雅 Alist 片源",
       "author": "media-bridge",
-      "version": "1.0.4",
+      "version": "1.0.5",
       "description": "小雅 Alist 搜索页 → 目录递归展开 → 阿里云盘直链",
       "hasWebui": true,
       "depends": [],
-      "bytes": 39925,
-      "md5": "8978382fe5343ecac6ef014ef1779e4f",
-      "path": "packages/xiaoya/xiaoya-1.0.4.tar.gz"
+      "bytes": 40078,
+      "md5": "bb3217d348673733ef1dc5be4fbaaede",
+      "path": "packages/xiaoya/xiaoya-1.0.5.tar.gz"
     }
   ]
 }

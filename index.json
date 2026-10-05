@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-05T12:07:27.827Z",
+  "generatedAt": "2026-10-05T12:57:46.634Z",
   "plugins": [
     {
       "types": [
@@ -104,13 +104,13 @@
       "id": "xiaoya",
       "name": "小雅 Alist 片源",
       "author": "media-bridge",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "description": "小雅 Alist 搜索页 → 目录递归展开 → 阿里云盘直链",
       "hasWebui": true,
       "depends": [],
-      "bytes": 39557,
-      "md5": "55e74e1e32b13b2ebdc38d3cc09eba8b",
-      "path": "packages/xiaoya/xiaoya-1.0.2.tar.gz"
+      "bytes": 39988,
+      "md5": "0e21a5bd1727c4e4aeda16d1d494b55b",
+      "path": "packages/xiaoya/xiaoya-1.0.3.tar.gz"
     }
   ]
 }

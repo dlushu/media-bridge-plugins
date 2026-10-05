@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-05T04:51:12.593Z",
+  "generatedAt": "2026-10-05T06:21:14.924Z",
   "plugins": [
     {
       "types": [
@@ -59,13 +59,13 @@
       "id": "catpaw",
       "name": "猫爪源",
       "author": "media-bridge",
-      "version": "1.0.5",
+      "version": "1.0.6",
       "description": "猫爪源自托管：站点清单、候选、播放解析与测速",
       "hasWebui": true,
       "depends": [],
-      "bytes": 51205,
-      "md5": "bbefab29ead5c3a0fe124359d43c26d5",
-      "path": "packages/catpaw/catpaw-1.0.5.tar.gz"
+      "bytes": 51116,
+      "md5": "9eb977f4221047b3d3249f5701c6b14f",
+      "path": "packages/catpaw/catpaw-1.0.6.tar.gz"
     },
     {
       "types": [
@@ -74,13 +74,13 @@
       "id": "catpaw-resolve",
       "name": "猫爪源-网盘自解析版",
       "author": "media-bridge",
-      "version": "1.0.12",
+      "version": "1.0.13",
       "description": "猫爪源自托管，只解析源里面的网盘分享线路（夸克 / UC / 百度 / 阿里等十一家），普通线路原样透传",
       "hasWebui": true,
       "depends": [],
-      "bytes": 189990,
-      "md5": "d2c49827f6baac9c3025c11bf498ebba",
-      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.12.tar.gz"
+      "bytes": 189957,
+      "md5": "3cc8385fdceffd81cfdb262f765da4ea",
+      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.13.tar.gz"
     },
     {
       "types": [

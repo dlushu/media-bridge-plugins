@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-06T07:06:20.508Z",
+  "generatedAt": "2026-10-06T16:00:45.841Z",
   "plugins": [
     {
       "types": [
@@ -11,14 +11,14 @@
       "id": "missav",
       "name": "MissAV",
       "author": "media-bridge",
-      "version": "1.1.0",
+      "version": "1.1.2",
       "description": "MissAV 三合一：首页推荐、影片元数据、播放源",
       "domain": "missav",
       "hasWebui": true,
       "depends": [],
-      "bytes": 68192,
-      "md5": "9cf1d69a43afc48143af393760a12cd9",
-      "path": "packages/missav/missav-1.1.0.tar.gz"
+      "bytes": 74015,
+      "md5": "9ce8698fd4d5143d61afcf06b7f6abdd",
+      "path": "packages/missav/missav-1.1.2.tar.gz"
     },
     {
       "types": [

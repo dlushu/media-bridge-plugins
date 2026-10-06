@@ -393,9 +393,11 @@ Emby 的 DTO 形状（面板负责转换，见 [ADR-0007](https://github.com/dlu
   （不回退到别的域、不猜、不静默）。
 - **首页**：首页插件是 `home` 类型插件，与元数据 / 源插件跑在同一套宿主里；
   **一行 = 客户端上的一个媒体库**。已实现两个动作：
-  - `rows`（无参）→ `{ ok: true, rows: [ { id, title, collectionType?, feed? } ] }`：
+  - `rows`（无参）→ `{ ok: true, rows: [ { id, title, collectionType?, feed?, total? } ] }`：
     申报行清单。`collectionType` 是这一行做出来的库类型（`movies` / `tvshows` / `mixed`）；
-    `feed` 声明这一行接客户端的哪一类推荐查询，没有行声明时那条查询**如实回空**。
+    `feed` 声明这一行接客户端的哪一类推荐查询，没有行声明时那条查询**如实回空**；
+    `total` 可选，申报这个库的总条数（口径同上 `run` 的 `total`）—— 让客户端在**还没点开这个库**
+    之前就能看到真数，不申报就回退占位值；取不到就**不写**（别写 `0`，`0` 会被当空库）。
   - `run`（`{ rowId, params?, startIndex?, limit? }`）→ `{ items, total, cached? }`：
     `items` 是 HomeItem 数组，`total` 是这个库的总条数（插件不知道就按本页条数如实报）。
 - 行声明的 `id` / `title` / `collectionType` / `feed` 之外，还可带 `cacheDuration`（结果缓存秒数）与

@@ -1,6 +1,6 @@
 {
-  "version": "1.0.13",
-  "url": "catpaw-resolve-1.0.13.tar.gz",
-  "md5": "3cc8385fdceffd81cfdb262f765da4ea",
-  "changelog": "使用说明里的长源包地址在移动端会撑破页面，改为可断行；启动实例的端口就绪等待由 25 秒放宽到 60 秒。"
+  "version": "1.0.14",
+  "url": "catpaw-resolve-1.0.14.tar.gz",
+  "md5": "0ec39329b05c7a7f81c5b47e51a66d4d",
+  "changelog": "自解析出的网盘线路名去掉分隔符，前缀与档位直接连写（如「夸克原画」「百度无限」）。"
 }

@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-06T16:44:27.719Z",
+  "generatedAt": "2026-10-07T16:41:42.655Z",
   "plugins": [
     {
       "types": [
@@ -11,14 +11,14 @@
       "id": "missav",
       "name": "MissAV",
       "author": "media-bridge",
-      "version": "1.1.3",
+      "version": "1.1.4",
       "description": "MissAV 三合一：首页推荐、影片元数据、播放源",
       "domain": "missav",
       "hasWebui": true,
       "depends": [],
-      "bytes": 74577,
-      "md5": "e3ab4bfaab21e5508d2bd470694e5649",
-      "path": "packages/missav/missav-1.1.3.tar.gz"
+      "bytes": 74816,
+      "md5": "f7395b1e03085982c3c0367673a3c5ba",
+      "path": "packages/missav/missav-1.1.4.tar.gz"
     },
     {
       "types": [
@@ -28,14 +28,14 @@
       "id": "tmdb",
       "name": "TMDB",
       "author": "media-bridge",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "description": "TMDB 二合一：影片元数据与 TMDB 首页示例",
       "domain": "tmdb",
       "hasWebui": true,
       "depends": [],
-      "bytes": 49933,
-      "md5": "f89c22e1fd6cd1ede2491d36c56c4482",
-      "path": "packages/tmdb/tmdb-1.1.1.tar.gz"
+      "bytes": 53054,
+      "md5": "d5f93fbdd3cce9155dbb5fc9351e6ee6",
+      "path": "packages/tmdb/tmdb-1.1.2.tar.gz"
     },
     {
       "types": [
@@ -44,13 +44,13 @@
       "id": "fwrex",
       "name": "媒体播放器Widgets",
       "author": "media-bridge",
-      "version": "1.1.3",
+      "version": "1.1.5",
       "description": "把面板聚合播放输出成媒体播放器组件，供 FW/Rex 与 CapyPlayer 调用",
       "hasWebui": true,
       "depends": [],
-      "bytes": 24676,
-      "md5": "3837dce3b7200739347d8de327793de6",
-      "path": "packages/fwrex/fwrex-1.1.3.tar.gz"
+      "bytes": 27471,
+      "md5": "00c7cd2cb942491f97df0ad10bb5170f",
+      "path": "packages/fwrex/fwrex-1.1.5.tar.gz"
     },
     {
       "types": [
@@ -74,13 +74,28 @@
       "id": "catpaw-resolve",
       "name": "猫爪源-网盘自解析版",
       "author": "media-bridge",
-      "version": "1.0.14",
+      "version": "1.0.15",
       "description": "猫爪源自托管，只解析源里面的网盘分享线路（夸克 / UC / 百度 / 阿里等十一家），普通线路原样透传",
       "hasWebui": true,
       "depends": [],
-      "bytes": 193135,
-      "md5": "0ec39329b05c7a7f81c5b47e51a66d4d",
-      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.14.tar.gz"
+      "bytes": 194023,
+      "md5": "14a542e87f049ce2c0413d287b1ad96c",
+      "path": "packages/catpaw-resolve/catpaw-resolve-1.0.15.tar.gz"
+    },
+    {
+      "types": [
+        "source"
+      ],
+      "id": "emby",
+      "name": "Emby 片源",
+      "author": "media-bridge",
+      "version": "1.0.0",
+      "description": "填入外部 Emby 的连接方式 → 搜索该服务器的影片/剧集 → 直连取源播放",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 27450,
+      "md5": "736ab17e355e5487f0ccaa57d9f9de6e",
+      "path": "packages/emby/emby-1.0.0.tar.gz"
     },
     {
       "types": [

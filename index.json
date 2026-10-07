@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-07T16:41:42.655Z",
+  "generatedAt": "2026-10-07T17:50:34.436Z",
   "plugins": [
     {
       "types": [
@@ -44,13 +44,13 @@
       "id": "fwrex",
       "name": "媒体播放器Widgets",
       "author": "media-bridge",
-      "version": "1.1.5",
+      "version": "1.1.7",
       "description": "把面板聚合播放输出成媒体播放器组件，供 FW/Rex 与 CapyPlayer 调用",
       "hasWebui": true,
       "depends": [],
-      "bytes": 27471,
-      "md5": "00c7cd2cb942491f97df0ad10bb5170f",
-      "path": "packages/fwrex/fwrex-1.1.5.tar.gz"
+      "bytes": 28515,
+      "md5": "056e4d29a18b77065c8f6a7b5c51170f",
+      "path": "packages/fwrex/fwrex-1.1.7.tar.gz"
     },
     {
       "types": [
@@ -89,13 +89,13 @@
       "id": "emby",
       "name": "Emby 片源",
       "author": "media-bridge",
-      "version": "1.0.0",
-      "description": "填入外部 Emby 的连接方式 → 搜索该服务器的影片/剧集 → 直连取源播放",
+      "version": "1.0.4",
+      "description": "添加多台外部 Emby（每台一个站点）→ 搜索对应服务器的影片/剧集 → 直连取源播放",
       "hasWebui": true,
       "depends": [],
-      "bytes": 27450,
-      "md5": "736ab17e355e5487f0ccaa57d9f9de6e",
-      "path": "packages/emby/emby-1.0.0.tar.gz"
+      "bytes": 34788,
+      "md5": "bc94a1636cf7cb11e2be0a4e729d5b9c",
+      "path": "packages/emby/emby-1.0.4.tar.gz"
     },
     {
       "types": [

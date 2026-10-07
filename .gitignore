@@ -6,3 +6,6 @@ plugins/
 
 .DS_Store
 node_modules/
+
+# 本地 agent 指引，不进仓库
+agent.md

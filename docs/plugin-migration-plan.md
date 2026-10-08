@@ -1,7 +1,7 @@
 # 插件化改造：施工批次计划
 
 - 状态：**计划**（随进度更新；改完的批次在这里打勾并记下验证方式）
-- 依据：[plugin-contract.md](plugin-contract.md)（契约）· [adr/0028](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0028-plugin-system.md)~[0034](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0034-fresh-install-no-migration.md)（决策）
+- 依据：[plugin-contract.md](https://github.com/dlushu/MediaBridge-plugin-devkit/blob/main/framework/contracts/plugin-contract.md)（契约）· [adr/0028](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0028-plugin-system.md)~[0034](https://github.com/dlushu/media-bridge-panel/blob/main/docs/adr/0034-fresh-install-no-migration.md)（决策）
 - 讨论存档：[plugin-arch-draft.md](plugin-arch-draft.md)
 
 > 本文讲的是**面板仓库**的改造过程：文中出现的 `server/`、`public/`、`docs/` 等路径都指面板仓库
@@ -201,7 +201,7 @@ data/
 
 **范围**（本批开工时定下的口径）：不只是把协议搬走，**连源实例本身一起搬** ——
 猫爪插件自己存实例清单、自己下载与起实例进程、自己管自动更新与配置中心入口；
-面板不再认识任何"源地址"。依据见 [plugin-contract.md](plugin-contract.md) 第十四节
+面板不再认识任何"源地址"。依据见 [plugin-contract.md](https://github.com/dlushu/MediaBridge-plugin-devkit/blob/main/framework/contracts/plugin-contract.md) 第十五节
 与 [plugin-arch-draft.md](plugin-arch-draft.md) 第 82~83 行（"插件内部起几个实例、监听哪个端口，是插件自己的事"）。
 
 **为什么一次搬完而不是分两步**：分两步会留一个"面板仍托管实例、只把协议转给插件"的过渡态，
@@ -343,7 +343,7 @@ data/
 
 ### 批次 7 — 播放地址转交（`ref` 由插件解析）· 已完成，待确认
 
-**已定的形态**（把契约第五节那两行落成具体做法；依据是契约第八节"`ref` 由插件自己编，面板不解析"
+**已定的形态**（把契约第五节那两行落成具体做法；依据是契约第九节"`ref` 由插件自己编，面板不解析"
 + ADR-0030）：
 
 1. **线路与选集的解析搬进源插件**：`$$$` / `#` / `$` 是**猫爪源自己的约定**
@@ -458,7 +458,7 @@ data/
 - **定下的口径**：
   - **token 归首页插件自己**（插件设置页自己填）—— 统一宿主的插件**没有回调面板的通道**
     （`ctx` 只有 `type/id/dataDir/log`），"面板中转取上游"要新增反向通道，不如让插件自带 token。
-  - 行清单 / 取数 / 参数 / **行结果缓存**全归插件（契约第十节）；面板侧只留
+  - 行清单 / 取数 / 参数 / **行结果缓存**全归插件（契约第十一节）；面板侧只留
     "最后一次成功取到的条目"这份**同步可读**的记忆（`Views` 的库封面要同步拿图，见适配层 `peekRowItems`）。
   - **分页原样透传**：`StartIndex`/`Limit` 直达插件，面板与插件层都不切片。
   - `enabledRows` / `rowByFeed` / `peekRowItems` 被 emby 层**同步**调用，故行清单在面板内存里存一份
@@ -542,7 +542,7 @@ data/
    浏览器实测控制台不再报 `Cannot access 'timer' before initialization`。
 5. **`docs/emby-home-plugin.md`** 描述的是**已删掉**的那套（沙箱 / 单文件上传 / 8 个端点 / 「首页插件」页），
    批次 9 已把它改写成「首页插件指南」（只留行声明 / HomeItem / 分页 / 与 Emby 端点的接线，
-   其余指向 [plugin-contract.md](plugin-contract.md) 与 `plugins/home/<id>/`）。
+   其余指向 [plugin-contract.md](https://github.com/dlushu/MediaBridge-plugin-devkit/blob/main/framework/contracts/plugin-contract.md) 与 `plugins/home/<id>/`）。
 
 ## 五、依赖关系（一眼看）
 

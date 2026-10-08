@@ -1,7 +1,8 @@
 # media-bridge-plugins
 
-[媒体桥面板](https://github.com/dlushu/media-bridge-panel)的**插件仓库**：打包工具、插件契约文档，
-以及打好的包与清单都在这里。插件源码（`plugins/`）是个人资产、不进本仓库。
+[媒体桥面板](https://github.com/dlushu/media-bridge-panel)的**插件仓库**：打好的包与清单都在这里。
+插件源码（`plugins/`）是个人资产、不进本仓库；插件的**契约文档与开发工具**在
+[MediaBridge-plugin-devkit](https://github.com/dlushu/MediaBridge-plugin-devkit)（开发套件仓）。
 
 面板本身**不带插件**（见面板的 ADR-0035）。装完之后到面板的「插件 → 插件库」页从这里挑插件安装；
 也可以在「插件 → 管理」页上传本地的 `.tar.gz` 手装。
@@ -10,11 +11,11 @@
 
 ```
 plugins/<id>/                             插件源码（本地开发用；不进仓库；可多类型，角色放 roles/<类型>/）
-tools/plugin-pack.js                      打包脚本
-tools/contract.js                         打包侧的契约校验（面板 server/modules/plugin/contract.js 的子集）
-docs/                                     插件文档（契约 / 架构讨论存档 / 施工批次计划 / 首页插件规范）
 docs/notes/                               过程记录（当时的计划与迁移留档）
+docs/plugin-arch-draft.md                 插件化架构讨论存档（历史）
+docs/plugin-migration-plan.md             施工批次计划（历史）
 packages/<id>/<id>-<版本>.tar.gz            插件包（一个 id 一个目录，不按类型分目录）
+packages/<id>/update.json                 自更新清单（Magisk 式，由打包工具生成）
 index.json                                插件清单（面板「插件库」页拉的就是它）
 ```
 
@@ -44,7 +45,7 @@ index.json                                插件清单（面板「插件库」�
 ```
 
 多类型包（`types` 多于一个）的 `plugin.json` 还要写**按类型映射的 webui 入口**，
-入口动作按角色分组（详见 `docs/plugin-contract.md` 第二、四节与面板 ADR-0046）：
+入口动作按角色分组（详见开发套件仓 `framework/contracts/plugin-contract.md` 第二、四节与面板 ADR-0046）：
 
 ```json
 {
@@ -59,13 +60,14 @@ index.json                                插件清单（面板「插件库」�
 
 ## 打一个插件
 
-```bash
-node tools/plugin-pack.js catpaw                         # 打一个（按插件 id）
-node tools/plugin-pack.js catpaw pikpak                  # 打指定的几个
-node tools/plugin-pack.js --all                          # 全量重建
-```
+打包工具在开发套件仓：[MediaBridge-plugin-devkit](https://github.com/dlushu/MediaBridge-plugin-devkit)
+的 `framework/tools/pack.js`。在本仓库根跑：
 
-`--out <目录>` 指定输出目录，**省略就是当前目录**（在仓库根直接跑即可）。
+```bash
+node <devkit>/framework/tools/pack.js --library catpaw            # 打一个（按插件 id）
+node <devkit>/framework/tools/pack.js --library catpaw pikpak     # 打指定的几个
+node <devkit>/framework/tools/pack.js --library --all             # 全量重建
+```
 
 - **一次只打指定的那些**：改了一个插件就只重打它，慢的是"每次全量重打"，其余包的 md5 也无谓地变。
 - **`index.json` 按 `packages/` 里现有的包当场重算**（逐个解出包里的 `plugin.json` 取字段、再算包文件的
@@ -79,7 +81,7 @@ node tools/plugin-pack.js --all                          # 全量重建
 ```bash
 # 1) 改 plugins/<id>/ 下的源码
 # 2) 重打那一个包
-node tools/plugin-pack.js <id>
+node <devkit>/framework/tools/pack.js --library <id>
 # 3) 在面板里更新：把新包推上本仓库后在「插件 → 插件库」点更新，或直接在「插件 → 管理」上传这个 .tar.gz
 ```
 
@@ -97,7 +99,9 @@ node tools/plugin-pack.js <id>
 
 ## 文档与决策在哪
 
-- 插件能做什么、面板怎么调它：`docs/plugin-contract.md`（**契约的唯一来源**）。
-- 首页插件的行与条目规范：`docs/emby-home-plugin.md`。
+- 插件能做什么、面板怎么调它：开发套件仓的
+  [`framework/contracts/plugin-contract.md`](https://github.com/dlushu/MediaBridge-plugin-devkit/blob/main/framework/contracts/plugin-contract.md)（**契约的唯一来源**）。
+- 源插件显示与定位规范、首页插件行与条目规范、webui 前端契约：同仓 `framework/contracts/`。
 - 为什么这么设计（ADR）、面板自己的实现要点（`develop.md`、`ARCHITECTURE.md`）都在
   [面板仓库](https://github.com/dlushu/media-bridge-panel)—— 文档里指向它们的链接用绝对地址。
+- 本仓库 `docs/` 下只剩历史存档（架构讨论、批次计划），不再是开发入口。

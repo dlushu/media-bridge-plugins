@@ -1,10 +1,10 @@
 # 插件化架构（草案）
 
-- 状态：**讨论存档**（全部条目已确认）。**正式结论以 [plugin-contract.md](plugin-contract.md)
+- 状态：**讨论存档**（全部条目已确认）。**正式结论以开发套件仓的
+  [plugin-contract.md](https://github.com/dlushu/MediaBridge-plugin-devkit/blob/main/framework/contracts/plugin-contract.md)
   与面板仓库 [docs/adr/](https://github.com/dlushu/media-bridge-panel/tree/main/docs/adr) 的 0028~0034 为准**；两者若不一致，以后者为准。本文保留逐条讨论过程与取舍记录。
-  代码仍未开始改动。
 - 用途：把已经谈成的部分固定下来，把未定的逐条编号，避免讨论过程中丢失。
-- 定稿后的去向：契约部分已并入 [plugin-contract.md](plugin-contract.md)，决策部分进面板仓库的 `docs/adr/`。
+- 定稿后的去向：契约部分已并入开发套件仓的 `framework/contracts/plugin-contract.md`，决策部分进面板仓库的 `docs/adr/`。
 - 编号约定：`已定 N` 是编号，**允许跳号**（某条被后来的决定取代后，编号就不再使用，
   例如"执行形态由插件声明"那条被"所有插件一样、每个插件一个常驻子进程"取代）。
   以正文与各条目自己的说明为准。

@@ -73,6 +73,8 @@ node <devkit>/framework/tools/pack.js --library --all             # 全量重建
 - **`index.json` 按 `packages/` 里现有的包当场重算**（逐个解出包里的 `plugin.json` 取字段、再算包文件的
   md5 与字节数）—— 清单不会与包脱节，增量打包时其余条目也是现算的，不会读到旧数字。
 - 打 `<id>` 之前会先删掉 `packages/<id>/` 整个目录 —— 升版本后不会新旧两个包并存于清单里。
+- **`plugin.json` 里写了 `"hidden": true` 的包照打包、照留在 `packages/`，但不进 `index.json`** ——
+  面板「插件库」页不列它；要装就在「插件 → 管理」上传这个 `.tar.gz`，装完仍按 `updateUrl` 自更新。
 - `--all` 会先清空 `packages/` 与 `index.json` 再全量重打（**唯一会丢东西的模式**，也是"要一份干净产物"时的入口）。
 - 源码目录连契约都过不了会当场报错、不打包（面板装了也会拒），所以打包本身是一道前置校验。
 

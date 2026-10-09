@@ -1,25 +1,7 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-07T17:50:34.436Z",
+  "generatedAt": "2026-10-09T03:06:20.456Z",
   "plugins": [
-    {
-      "types": [
-        "home",
-        "metadata",
-        "source"
-      ],
-      "id": "missav",
-      "name": "MissAV",
-      "author": "media-bridge",
-      "version": "1.1.4",
-      "description": "MissAV 三合一：首页推荐、影片元数据、播放源",
-      "domain": "missav",
-      "hasWebui": true,
-      "depends": [],
-      "bytes": 74816,
-      "md5": "f7395b1e03085982c3c0367673a3c5ba",
-      "path": "packages/missav/missav-1.1.4.tar.gz"
-    },
     {
       "types": [
         "metadata",
@@ -96,21 +78,6 @@
       "bytes": 34788,
       "md5": "bc94a1636cf7cb11e2be0a4e729d5b9c",
       "path": "packages/emby/emby-1.0.4.tar.gz"
-    },
-    {
-      "types": [
-        "source"
-      ],
-      "id": "pikpak",
-      "name": "PikPak 磁力片源",
-      "author": "media-bridge",
-      "version": "1.0.11",
-      "description": "磁力搜索 → PikPak 离线下载 → 播放直链",
-      "hasWebui": true,
-      "depends": [],
-      "bytes": 61702,
-      "md5": "a2a2479dea6e741972910ae542607c2d",
-      "path": "packages/pikpak/pikpak-1.0.11.tar.gz"
     },
     {
       "types": [

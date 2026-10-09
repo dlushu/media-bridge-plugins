@@ -1,0 +1,6 @@
+{
+  "version": "1.0.1",
+  "url": "subtitlecat-1.0.1.tar.gz",
+  "md5": "5cd10ae835ebd2285cf53fab5e349e18",
+  "changelog": "1.0.1：冷缓存的并发同键请求 singleflight 去重（同一番号 / 同一条字幕同时只打一发站点）。1.0.0：tracks / fetch 两动作 + 设置页（基地址、语言顺序、缓存、自检）"
+}

@@ -1,0 +1,6 @@
+{
+  "version": "0.1.0",
+  "url": "xunlei-subtitle-0.1.0.tar.gz",
+  "md5": "a2f2abd8f7ea82cd1d1474b58c68df2f",
+  "changelog": "0.1.0：tracks / fetch 两动作 + 设置页（接口地址、缓存时长）；冷缓存并发同键请求 singleflight 合并"
+}

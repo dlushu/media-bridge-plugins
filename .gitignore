@@ -9,3 +9,6 @@ node_modules/
 
 # 本地 agent 指引，不进仓库
 agent.md
+
+# 本地技能（含私有连接信息），不进仓库
+.trae/

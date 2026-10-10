@@ -1,6 +1,6 @@
 {
-  "version": "1.0.11",
-  "url": "pikpak-1.0.11.tar.gz",
-  "md5": "f601118fba8300525b0e543aa1bfb743",
-  "changelog": "设置页改用面板统一样式"
+  "version": "1.1.1",
+  "url": "pikpak-1.1.1.tar.gz",
+  "md5": "9fb801f6c45c7f0b73e59ccb0dbc4144",
+  "changelog": "1.1.1：站点名去掉内容分类后缀（`·` 由渲染层插入，数据字段不得自带）\n1.1.0：新增 JavDB 磁力站（原 app.javdb 内置磁力源迁入）"
 }

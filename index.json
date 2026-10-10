@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-09T17:16:45.648Z",
+  "generatedAt": "2026-10-10T16:20:25.089Z",
   "plugins": [
     {
       "types": [
@@ -11,14 +11,14 @@
       "id": "hongguo",
       "name": "红果短剧",
       "author": "MediaBridge",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "红果短剧三合一插件：首页片单（短剧/漫剧/榜单）、片源检索与播放（本地解密代理）、元数据。",
       "domain": "hongguo",
       "hasWebui": false,
       "depends": [],
-      "bytes": 119440,
-      "md5": "339a1833bc1ade5dbb1db200a13b51eb",
-      "path": "packages/hongguo/hongguo-0.1.0.tar.gz"
+      "bytes": 122740,
+      "md5": "e3dd0c7c01cc36c6d99fbf786b27a135",
+      "path": "packages/hongguo/hongguo-0.1.1.tar.gz"
     },
     {
       "types": [

@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-10T16:20:25.089Z",
+  "generatedAt": "2026-10-13T17:02:21.831Z",
   "plugins": [
     {
       "types": [
@@ -78,8 +78,8 @@
       "description": "猫爪源自托管，只解析源里面的网盘分享线路（夸克 / UC / 百度 / 阿里等十一家），普通线路原样透传",
       "hasWebui": true,
       "depends": [],
-      "bytes": 194023,
-      "md5": "14a542e87f049ce2c0413d287b1ad96c",
+      "bytes": 195308,
+      "md5": "3f91f8282672c846a46bdd2cf0775c9f",
       "path": "packages/catpaw-resolve/catpaw-resolve-1.0.15.tar.gz"
     },
     {

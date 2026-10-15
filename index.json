@@ -1,6 +1,6 @@
 {
   "schema": 2,
-  "generatedAt": "2026-10-14T16:57:06.314Z",
+  "generatedAt": "2026-10-15T03:19:09.269Z",
   "plugins": [
     {
       "types": [
@@ -19,6 +19,24 @@
       "bytes": 124195,
       "md5": "b95f80e75247a638a93cb50867d670ac",
       "path": "packages/hongguo/hongguo-0.1.3.tar.gz"
+    },
+    {
+      "types": [
+        "metadata",
+        "source",
+        "home"
+      ],
+      "id": "pornhub",
+      "name": "Pornhub",
+      "author": "",
+      "version": "1.0.1",
+      "description": "Pornhub 元数据 + HLS 片源 + 首页（精选/最新/热门/最多观看/最高评分/推荐视频/随机/我的最爱；收藏只填用户名，推荐可填 Cookie 个性化；封面由面板代取、轮播走 feed:random）",
+      "domain": "pornhub",
+      "hasWebui": true,
+      "depends": [],
+      "bytes": 31497,
+      "md5": "7a9e82a4b9757a05a7ded6edf91fcec4",
+      "path": "packages/pornhub/pornhub-1.0.1.tar.gz"
     },
     {
       "types": [

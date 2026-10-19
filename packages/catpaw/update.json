@@ -1,6 +1,6 @@
 {
-  "version": "1.0.9",
-  "url": "catpaw-1.0.9.tar.gz",
-  "md5": "3a91475f32e518dade7c80d7e58ef932",
-  "changelog": "修复地址里带 `账号:口令@`（Basic 认证）时下载源包、自动更新、访问外部实例一律失败：`fetch` 拒绝带凭证的 URL，请求还没发出就抛 `TypeError`。凭证改走 `Authorization: Basic` 头（新增 `lib/url-auth.js`），下载与上游请求两条路径都覆盖；同时把地址里的口令在错误文案、日志和设置页展示里打码。"
+  "version": "1.0.10",
+  "url": "catpaw-1.0.10.tar.gz",
+  "md5": "192f6df74149dd48e020b349954dcbdd",
+  "changelog": "启动 / 重启时若源包 md5 校验不过（例如远端 `index.config.js` 换了却没更新 `.md5`，报「index.config.js 与 index.config.js.md5 不一致」），设置页会先说明风险，确认后可「强制启动」跳过校验直接跑本地那份文件；开机自启仍严格校验，不静默放过。另含 1.0.9 的修复：地址里带 `账号:口令@`（Basic 认证）时下载 / 自动更新 / 访问外部实例失败的问题（凭证改走 `Authorization: Basic` 头，新增 `lib/url-auth.js`，地址里的口令在错误文案、日志、展示页一律打码）。"
 }
